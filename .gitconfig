@@ -1,0 +1,17 @@
+[user]
+	name = elpeople
+	email = elpeoplegm@gmail.com
+[usr]
+	email = elpeoplegm@gmailcom
+[core]
+	excludesfile = /Users/elpeople/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/elpeople/.stCommitMsg
+[color]
+	ui = true
