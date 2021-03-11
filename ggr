@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+#
+ARGS=""
+ARG=""
+
+function showUsage() {
+	cat <<_EOT_
+  Usage:
+	./google
+  Description:
+   Read theis script
+  Options:
+    -h|--help : show usage.
+_EOT_
+	exit 1
+}
+
+#
+if [ "$1" = "-h" ] || [ "$1" = "--help" ];
+then
+	showUsage
+fi
+
+#
+for ARG in "$@"
+do
+	ARGS="${ARGS}+${ARG}"
+done
+ARGS=$(echo ${ARGS} | sed 's/^\+//')
+
+#
+w3m http://www.google.co.jp/search?q="${ARGS}"
+
