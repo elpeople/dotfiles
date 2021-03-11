@@ -1,0 +1,2 @@
+#!/bin/sh
+screen w3m -o confirm_qq=0 $@

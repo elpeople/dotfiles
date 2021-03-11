@@ -1,0 +1,5 @@
+f [ $TERM != "screen" ]; then
+  if [ $TERM != "dumb" ]; then
+      screen -e ^z^z
+    fi
+fi

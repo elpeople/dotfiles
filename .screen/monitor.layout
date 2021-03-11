@@ -1,0 +1,13 @@
+only
+select $win0
+split
+resize -v 80%
+focus
+select $win1
+split -v
+split -v
+focus
+select $win2
+focus
+select $win3
+focus
