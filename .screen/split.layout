@@ -1,0 +1,6 @@
+only
+select $win0
+split
+focus
+select $win1
+focus
