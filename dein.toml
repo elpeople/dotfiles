@@ -21,14 +21,17 @@ hook_add = '''
   au MyAutoCmd VimEnter * nested colorscheme hybrid
 '''
 
-[[plugins]]
-repo = 'Shougo/unite.vim'
-[[plugins]]
-repo = 'Shougo/vimfiler'
 #[[plugins]]
 #repo = 'Shougo/vimproc'
 #[[plugins]]
 #repo = 'Shougo/vimshell'
+[[plugins]]
+repo = 'Shougo/vimfiler'
+[[plugins]]
+repo = 'Shougo/unite.vim'
+
+#[[plugins]]
+#repo = 'thinca/vim-quickrun'
 
 [[plugins]]
 repo = 'davidoc/taskpaper.vim'
@@ -90,9 +93,8 @@ repo = 'reireias/vim-cheatsheet'
 [[plugins]]
 repo = 'simeji/winresizer' 
 #[[plugins]]
-#repo = 'thinca/vim-quickrun'
-#[[plugins]]
 #repo = 'kana/vim-operator-replace'
+
 
 # other plugins
 # :
