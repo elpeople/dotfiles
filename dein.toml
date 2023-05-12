@@ -1,0 +1,98 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]] # toml syntax
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]] # カラースキーマ
+repo = 'w0ng/vim-hybrid'
+hook_add = '''
+  set background=dark
+  " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
+  " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+  au MyAutoCmd VimEnter * nested colorscheme hybrid
+'''
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+[[plugins]]
+repo = 'Shougo/vimfiler'
+#[[plugins]]
+#repo = 'Shougo/vimproc'
+#[[plugins]]
+#repo = 'Shougo/vimshell'
+
+[[plugins]]
+repo = 'davidoc/taskpaper.vim'
+ 
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+[[plugins]]
+repo = 'tpope/vim-surround'
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+#[[plugins]]
+#repo = 'ryanoasis/nerd-fonts'
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+[[plugins]]
+repo = 'junegunn/fzf'
+[[plugins]]
+repo = 'tpope/vim-repeat'
+[[plugins]]
+repo = 'tpope/vim-commentary'
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes' 
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+[[plugins]]
+repo = 'majutsushi/tagbar'
+[[plugins]]
+repo = 'junegunn/goyo.vim'
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+[[plugins]]
+repo ='editorconfig/editorconfig-vim'
+[[plugins]]
+repo = 'christoomey/vim-tmux-navigator'
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+[[plugins]]
+repo = 'mattn/emmet-vim'
+[[plugins]]
+repo = 'tpope/vim-markdown'
+[[plugins]]
+repo = 'iamcco/markdown-preview.vim'
+[[plugins]]
+repo = 'dhruvasagar/vim-table-mode'
+[[plugins]]
+repo = 'mattn/sonictemplate-vim'
+[[plugins]]
+repo = 'reireias/vim-cheatsheet'
+[[plugins]]
+repo = 'simeji/winresizer' 
+#[[plugins]]
+#repo = 'thinca/vim-quickrun'
+#[[plugins]]
+#repo = 'kana/vim-operator-replace'
+
+# other plugins
+# :
