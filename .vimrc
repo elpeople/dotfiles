@@ -1,3 +1,28 @@
+" leaderをスペースへ設定
+let mapleader = "\<Space>"
+
+" 「Spaceキー + 各種キー」のようなキー操作マッピング
+inoremap <Leader>jj <Esc>                         " ESCキー
+nnoremap <Leader>w :w<CR>                         " 保存
+nnoremap <Leader>q :q<CR>                         " 終了
+noremap <Leader>a myggVG$                         " 全選択(ノーマル)
+inoremap <Leader>a <Esc>myggVG$                   " 全選択(インサート)
+nnoremap <silent> <Leader>vr :new ~/.vimrc<CR>    " .vimrcを開く
+nnoremap <silent> <Leader>r :source ~/.vimrc<CR>  " .vimrcの読み込み
+noremap <Leader><Leader> <C-w>w                   " windowの移動
+map <leader>n :call RenameFile()<cr>              " 編集中ファイルのリネーム
+
+" リネーム関数定義
+function! RenameCurrentFile()
+  let old = expand('%')
+    let new = input('新規ファイル名: ', old , 'file')
+      if new != '' && new != old
+          exec ':saveas ' . new
+              exec ':silent !rm ' . old
+                  redraw!
+                    endif
+                    endfunction
+
 if !&compatible
   set nocompatible
 endif
