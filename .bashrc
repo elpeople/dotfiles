@@ -116,8 +116,8 @@ if ! shopt -oq posix; then
   fi
 fi
 [ -r /home/elpeople/.byobu/prompt ] && . /home/elpeople/.byobu/prompt   #byobu-prompt#
-if [ $(service docker status | awk '{print $4}') = "not" ]; then
-  sudo service docker start > /dev/null
-fi
+# if [ $(service docker status | awk '{print $4}') = "not" ]; then
+#   sudo service docker start > /dev/null
+# fi
 export SCREENDIR=$HOME/.screen
 

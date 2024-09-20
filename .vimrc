@@ -70,6 +70,18 @@ set paste
 set ambiwidth=double
 set tabstop=2
 set expandtab
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+set laststatus=2
+syntax on
+set autoindent
+filetype plugin indent on
+set showcmd
+set ruler
+set cursorline
+set showmatch
 set shiftwidth=2
 set smartindent
 " set list
@@ -79,7 +91,7 @@ set smartindent
 " set virtualedit=block
 " set whichwrap=b,s,[,],<,>
 " set backspace=indent,eol,start
-" set wildmenu
+set wildmenu
 
 " .vimrcを開く
 nnoremap <space>. :edit $MYVIMRC<CR>
@@ -93,3 +105,18 @@ autocmd Colorscheme * highlight Folded ctermbg=none
 autocmd Colorscheme * highlight EndOfBuffer ctermbg=none
 augroup END
 
+let g:airline#extension#tabline#enable = 1
+" , キーで次タブのバッファを表示
+nnoremap <silent> , :bprev<CR>
+" . キーで前タブのバッファを表示
+nnoremap <silent> . :bnext<CR>
+" bdで現在のバッファを削除
+nnoremap bd :bd<CR>
+
+
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap ss :<C-u>sp<CR><C-w>j
+nnoremap sv :<C-u>vs<CR><C-w>l

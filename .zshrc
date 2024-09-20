@@ -101,7 +101,7 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
 ## alias
-alias ls='ls -FG'
+alias ls='ls -FG --color=auto'
 alias la='ls -Fa'
 alias ll='ls -Flh'
 alias lla='ls -Falh'
