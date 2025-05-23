@@ -101,7 +101,7 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
 ## alias
-alias ls='ls -FG --color=auto'
+alias ls='ls -FG'
 alias la='ls -Fa'
 alias ll='ls -Flh'
 alias lla='ls -Falh'
@@ -159,7 +159,24 @@ ls_abbrev() {
         echo "$ls_result"
     fi
 }
+# ranger 内から起動されたシェルでプロンプトを変更
+if [[ -n "$RANGER_LEVEL" ]]; then
+  PROMPT="%{$fg[cyan]%}(in ranger)%{$reset_color%} $PROMPT"
+  fi
 
+  # ranger_cd 関数定義
+  ranger_cd() {
+    local temp_file="$(mktemp -t ranger_cd.XXXXXXXXXX)"
+    ranger --choosedir="$temp_file" -- "${@:-$PWD}"
+    local chosen_dir="$(<"$temp_file")"
+    [[ -n "$chosen_dir" && "$chosen_dir" != "$PWD" ]] && cd -- "$chosen_dir"
+    rm -f -- "$temp_file"
+    }
+
+  # Ctrl-O を ranger_cd にバインド
+  if (( $+commands[ranger] )) && [[ -o interactive ]]; then
+   bindkey -s '^O' 'ranger_cd\n'
+  fi
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
