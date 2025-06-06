@@ -121,5 +121,30 @@ fi
 # if [ $(service docker status | awk '{print $4}') = "not" ]; then
 #   sudo service docker start > /dev/null
 # fi
-export SCREENDIR=$HOME/.screen
+# ranger settings
+# Compatible with ranger 1.5.3 through 1.7.*
+#
+# Change the prompt when you open a shell from inside ranger
+#
+# Add this line to your .bashrc for it to work.
 
+[ -n "$RANGER_LEVEL" ] && PS1="$PS1"'(in ranger) '
+
+# ranger_cd
+ranger_cd() {
+    temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
+    ranger --choosedir="$temp_file" -- "${@:-$PWD}"
+    if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
+        cd -- "$chosen_dir"
+    fi
+    rm -f -- "$temp_file"
+}
+
+# This binds Ctrl-O to ranger_cd:
+if which ranger >& /dev/null && [[ -t 1 ]]; then
+    bind '"\C-o":"ranger_cd\C-m"'
+fi
+
+export EDITOR=vim
+export SCREENDIR=$HOME/.screen
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/linuxbrew/.linuxbrew/bin
