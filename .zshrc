@@ -112,7 +112,7 @@ alias dcom='docker-compose'
 alias dk='docker'
 alias gcl="git fetch --prune; git br --merged master | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d % ; git br --merged main | grep -vE '^\*|main$|develop$' | xargs -I % git branch -d % ; git br --merged develop | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %; git br -vv"
 alias python=python3
-alias afxw='"/mnt/c/bin/afxw/afxw.exe"'
+alias afxw='"/mnt/c/bin/afxw/afxw.exe" & disown'
 
 zinit ice wait'!0'
 zinit light zsh-users/zsh-autosuggestions
