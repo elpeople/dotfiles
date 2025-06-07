@@ -16,8 +16,8 @@ if [ -e /usr/local/share/zsh-completions ]; then
   fpath=(/usr/local/share/zsh-completions $fpath)
 fi
 
-# autoload -Uz compinit
-compinit -u
+#autoload -Uz compinit
+#compinit -u
 
 ## completion option
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'  # 補完候補で、大文字・小文字を区別しないで補完出来るようにするが、大文字を入力した場合は区別する
