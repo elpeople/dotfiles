@@ -13,6 +13,8 @@ if has('persistent_undo')
   set undofile
 endif
 
+set clipboard=unnamedplus
+
 " dein settings {{{
 " dein自体の自動インストール
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
