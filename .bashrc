@@ -91,13 +91,25 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias w3m='w3m -B'
+# open explorer
+alias open='/mnt/c/windows/explorer.exe .'
+alias afxw='"/mnt/c/bin/afxw/afxw.exe" & disown'
+
+# trans
+#trans() {
+#    trans -sl=en -tl=ja "$@"
+#}
+
+transej() {
+    echo "入力どうぞ:"
+    read -r input_text
+    trans -sl=en -tl=ja "$input_text"
+}
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-# open explorer
-alias open='/mnt/c/windows/explorer.exe .'
-alias afxw='"/mnt/c/bin/afxw/afxw.exe" & disown'
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -143,6 +155,16 @@ ranger_cd() {
 # This binds Ctrl-O to ranger_cd:
 if which ranger >& /dev/null && [[ -t 1 ]]; then
     bind '"\C-o":"ranger_cd\C-m"'
+fi
+
+# auto start tmux
+tmux_count=$(ps -ax | grep '[t]mux' | wc -l)
+if [ $SHLVL = 3 ]; then
+    if [ $tmux_count = 0 ]; then
+        tmux -u new-session
+    elif [ $tmux_count = 1 ]; then
+        tmux -u attach
+    fi
 fi
 
 export EDITOR=vim

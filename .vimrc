@@ -7,6 +7,12 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
+" vimの永続undo
+if has('persistent_undo')
+  set undodir=~/.vim/undo
+  set undofile
+endif
+
 " dein settings {{{
 " dein自体の自動インストール
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
