@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+_pdffetchusage() {
+cat << EOF
+curl -> pdftotext -> stdout as text
+Usage:
+    pdffetch <pdftotext-options> [url]
+Options:
+    -h | --help       Show this help
+Notes:
+    All options before the last argument are passed to pdftotext
+    The last argument is treated as the URL to download the PDF from
+Dependencies:
+    curl, pdftotext
+EOF
+}
+
+# Help option
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    _pdffetchusage
+    exit 0
+fi
+
+# Check if there's at least one argument (URL)
+if [ $# -lt 1 ]; then
+    echo "Error: Missing URL"
+    _pdffetchusage
+    exit 1
+fi
+
+# Core logic
+tmpfile=$(mktemp)
+trap 'rm -f "$tmpfile"' EXIT
+
+url="${@: -1}"              # Last argument is the URL
+pdftotext_opts=("${@:1:$#-1}")  # All but last are options for pdftotext
+
+# Download and convert
+if curl -fsSL -o "$tmpfile" "$url"; then
+    pdftotext "${pdftotext_opts[@]}" "$tmpfile" -
+else
+    echo "Error: Failed to download PDF from $url" >&2
+    exit 2
+fi
+
+

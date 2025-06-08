@@ -6,9 +6,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 ## lang
-export PATH="/usr/local/bin:$PATH"
-export PATH=/opt/homebrew/bin:$PATH
-export LANG=ja_JP.UTF-8
+#export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+#export PATH=/opt/homebrew/bin:$PATH
+#export LANG=ja_JP.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 fpath=(path/to/zsh-completions/src $fpath)
 ## zsh-completions
@@ -222,3 +225,4 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+export PATH="$HOME/.local/bin:$PATH"
