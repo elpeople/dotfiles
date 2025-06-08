@@ -126,6 +126,8 @@ zinit light zdharma/history-search-multi-word
 zinit light b4b4r07/enhancd
 zinit light romkatv/powerlevel10k
 
+bindkey -e
+
 ## chpwd
 # cdの後にlsを実行
 
@@ -224,5 +226,11 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+transej() {
+  echo -n "入力どうぞ: "
+  read -r input_text
+  trans -sl=en -tl=ja "$input_text"
+}
 
 export PATH="$HOME/.local/bin:$PATH"
