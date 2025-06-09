@@ -19,8 +19,8 @@ if [ -e /usr/local/share/zsh-completions ]; then
   fpath=(/usr/local/share/zsh-completions $fpath)
 fi
 
-#autoload -Uz compinit
-#compinit -u
+autoload -Uz compinit
+compinit -u
 
 ## completion option
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'  # 補完候補で、大文字・小文字を区別しないで補完出来るようにするが、大文字を入力した場合は区別する
@@ -214,14 +214,14 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/elpeople/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/elpeople/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/elpeople/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/elpeople/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/elpeople/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/elpeople/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/elpeople/miniconda3/bin:$PATH"
+        export PATH="/home/elpeople/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -234,3 +234,6 @@ transej() {
 }
 
 export PATH="$HOME/.local/bin:$PATH"
+export GOPATH=$HOME
+export PATH=$PATH:$GOPATH/bin
+
