@@ -117,6 +117,7 @@ alias gcl="git fetch --prune; git br --merged master | grep -vE '^\*|master$|dev
 alias python=python3
 alias w3m='w3m -B'
 alias afxw='"/mnt/c/bin/afxw/afxw.exe" & disown'
+alias lg="lazygit"
 
 zinit ice wait'!0'
 zinit light zsh-users/zsh-autosuggestions

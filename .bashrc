@@ -95,6 +95,7 @@ alias w3m='w3m -B'
 # open explorer
 alias open='/mnt/c/windows/explorer.exe .'
 alias afxw='"/mnt/c/bin/afxw/afxw.exe" & disown'
+alias lg="lazygit"
 
 # trans
 #trans() {
