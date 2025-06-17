@@ -171,3 +171,6 @@ fi
 export EDITOR=vim
 export SCREENDIR=$HOME/.screen
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/linuxbrew/.linuxbrew/bin
+#source /usr/share/doc/fzf/examples/key-bindings.bash
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
