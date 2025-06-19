@@ -1,0 +1,3 @@
+[submodule "fzf/fzf/.config/fzf"]
+	path = fzf/fzf/.config/fzf
+	url = https://github.com/junegunn/fzf.git
