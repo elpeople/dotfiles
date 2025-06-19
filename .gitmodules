@@ -1,6 +1,9 @@
-[submodule "fzf/fzf/.config/fzf"]
-	path = fzf/fzf/.config/fzf
+[submodule "fzf"]
+	path = fzf
 	url = https://github.com/junegunn/fzf.git
-[submodule "fzf/.config/fzf"]
-	path = fzf/.config/fzf
-	url = https://github.com/junegunn/fzf.git
+[submodule "ranger/.config/ranger/colorschemes"]
+	path = ranger/.config/ranger/colorschemes
+	url = https://github.com/ranger/colorschemes
+[submodule "tmux/.config/tmux/plugins/tpm"]
+	path = tmux/.config/tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm

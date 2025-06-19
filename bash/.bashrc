@@ -191,6 +191,10 @@ export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_STATE_HOME="${HOME}/.local/state"
+# FZF_DEFAULT_OPTS_FILEをXDG準拠の構成にポイントさせる
+export FZF_DEFAULT_OPTS_FILE="$HOME/dotfiles/fzf-config/.config/fzf/fzf.conf"
+# fzfバイナリが非標準のサブモジュール場所にあるため、PATHに含める
+export PATH="$HOME/dotfiles/fzf/.config/fzf:$PATH"
 export EDITOR=vim
 export SCREENDIR=$HOME/.screen
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/linuxbrew/.linuxbrew/bin
