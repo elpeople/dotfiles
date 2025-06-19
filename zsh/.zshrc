@@ -13,6 +13,8 @@ export PATH="$HOME/.local/bin:$PATH"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+ZSH_THEME="archmocha"
+
 fpath=(path/to/zsh-completions/src $fpath)
 ## zsh-completions
 if [ -e /usr/local/share/zsh-completions ]; then

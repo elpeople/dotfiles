@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=100000
+HISTFILESIZE=200000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -35,37 +35,56 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# Catppuccin Mocha カラーコード
+BASE="#1e1e2e"  # 背景色
+TEXT="#cdd6f4"  # 基本テキスト色
+PINK="#f5c2e7"  # 強調色1
+MAUVE="#cba6f7" # 強調色2
+
+# TrueColor対応プロンプト
+if [[ "$TERM" =~ "256color" ]]; then
+    PS1='\[\e[38;2;205;214;244m\]\u@\h \[\e[38;2;203;166;247m\]\w\[\e[0m\] \$ '
+else
+    PS1='\u@\h:\w\$ '  # フォールバック用
+fi
+
+eval "$(dircolors -b ~/.dircolors)"
+
+LS_COLORS="fi=38;5;216"
+export LS_COLORS
+alias ls='ls --color=auto'
+
 # set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
+#case "$TERM" in
+#    xterm-color|*-256color) color_prompt=yes;;
+#esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+#if [ -n "$force_color_prompt" ]; then
+#    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	# We have color support; assume it's compliant with Ecma-48
 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
 	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
+#	color_prompt=yes
+#    else
+#	color_prompt=
+#    fi
+#fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
+#if [ "$color_prompt" = yes ]; then
+#    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+#else
+#    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+#fi
+#unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
+term*|rxvt*)
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
 *)
@@ -76,8 +95,8 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+#    alias dir='dir --color=auto'
+#    alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -90,7 +109,7 @@ fi
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
-alias l='ls -CF'
+alias l='ls -l'
 alias w3m='w3m -B'
 # open explorer
 alias open='/mnt/c/windows/explorer.exe .'
@@ -130,7 +149,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-[ -r /home/elpeople/.byobu/prompt ] && . /home/elpeople/.byobu/prompt   #byobu-prompt#
+#[ -r /home/elpeople/.byobu/prompt ] && . /home/elpeople/.byobu/prompt   #byobu-prompt#
 # if [ $(service docker status | awk '{print $4}') = "not" ]; then
 #   sudo service docker start > /dev/null
 # fi
@@ -168,6 +187,10 @@ if [ $SHLVL = 3 ]; then
     fi
 fi
 
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_STATE_HOME="${HOME}/.local/state"
 export EDITOR=vim
 export SCREENDIR=$HOME/.screen
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/linuxbrew/.linuxbrew/bin
