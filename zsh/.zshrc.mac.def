@@ -1,0 +1,12 @@
+# ~/.zshrc.mac - Apple Silicon macOS 用設定
+
+# Homebrew (Apple Silicon)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# macOS特有のaliasなど（任意）
+alias ls='ls -G'
+alias pbcopy='reattach-to-user-namespace pbcopy'
+alias pbc='pbcopy'
+alias pbp='pbpaste'
