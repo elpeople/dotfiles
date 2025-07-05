@@ -1,0 +1,9 @@
+# ~/.zshrc.win - Windows (Git Bash/MSYS2) 用設定
+
+# Windowsのエイリアス
+alias explorer='explorer.exe'
+alias clip='clip.exe'
+alias open='explorer.exe'
+
+# 色設定など
+alias ls='ls --color=auto'

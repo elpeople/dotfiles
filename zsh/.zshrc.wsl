@@ -1,0 +1,12 @@
+# ~/.zshrc.wsl - WSL用設定
+
+# WSLのGUIアプリ起動用
+export DISPLAY=:0
+
+# Windowsのパスを先に入れたいとき（任意）
+# export PATH="/mnt/c/Windows/System32:$PATH"
+
+# WSL特有のaliasなど（任意）
+alias explorer='explorer.exe'
+alias clip='clip.exe'
+alias open='explorer.exe'

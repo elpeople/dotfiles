@@ -1,0 +1,9 @@
+# ~/.zshrc.lin - 純粋なLinux用設定（Ubuntu, Debian, Archなど）
+
+# GUIがあればDISPLAYを自動設定
+if [ -n "$DISPLAY" ]; then
+  export DISPLAY
+fi
+
+alias ls='ls --color=auto'
+alias open='xdg-open'
