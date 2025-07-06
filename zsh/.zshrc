@@ -1,7 +1,7 @@
 # ~/.zshrc
 
 # 共通設定
-export EDITOR=nvim
+export EDITOR=vim
 export PATH="$HOME/.local/bin:$PATH"
 
 # zinit
@@ -31,3 +31,7 @@ case "$(uname)" in
   MINGW*|MSYS*|CYGWIN*)
     source ~/.zshrc.win ;;
 esac
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
