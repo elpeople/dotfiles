@@ -155,8 +155,7 @@ ls_abbrev() {
     esac
 
     local ls_result
-    ls_result=$(CLICOLOR_FORCE=1 COLUMNS=$COLUMNS command $cmd_ls ${opt_ls[@]} | sed $'/
-\[[0-9;]*m$/d')
+    ls_result=$(CLICOLOR_FORCE=1 COLUMNS=$COLUMNS command $cmd_ls ${opt_ls[@]} | sed -e 's/\x1b\[[0-9;]*m//g')
 
     local ls_lines=$(echo "$ls_result" | wc -l | tr -d ' ')
 
