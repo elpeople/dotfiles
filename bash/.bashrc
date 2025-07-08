@@ -48,3 +48,21 @@ elif [[ "$(uname -s)" == "CYGWIN_NT"* || "$(uname -s)" == "MINGW"* ]]; then
 else
     echo "DEBUG: Unknown OS detected: $(uname -s)"
 fi
+
+alias lg='lazygit'
+
+# ranger_cd function for bash
+ranger_cd() {
+  temp_file="$(mktemp -t ranger_cd.XXXXXXXXXX)"
+  ranger --choosedir="$temp_file" -- "${@:-$PWD}"
+  chosen_dir="$(<"$temp_file")"
+  if [[ -n "$chosen_dir" && "$chosen_dir" != "$PWD" ]]; then
+    cd -- "$chosen_dir"
+  fi
+  rm -f -- "$temp_file"
+}
+
+# Bind Ctrl-O to ranger_cd in bash
+if command -v ranger &> /dev/null; then
+  bind -x '"\C-o": ranger_cd'
+fi
