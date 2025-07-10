@@ -9,18 +9,26 @@ fi
 export PATH="/usr/local/bin:$PATH"
 export PATH=/opt/homebrew/bin:$PATH
 export LANG=ja_JP.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # 共通設定
 export EDITOR=vim
 export PATH="$HOME/.local/bin:$PATH"
+
+fpath=(path/to/zsh-completions/src $fpath)
+
+## zsh-completions
+if [ -e /usr/local/share/zsh-completions ]; then
+fpath=(/usr/local/share/zsh-completions $fpath)
+fi
 
 # zinit
 if [[ -s "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
   source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 fi
 
- autoload -Uz compinit
-compinit
+autoload -Uz compinit
+compinit -u
 
 ## completion option
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'  # 補完候補で、大文字・小文字を区別しないで補完出来るようにするが、大文字を入力した場合は区別する
@@ -114,7 +122,8 @@ alias dcom='docker-compose'
 alias dk='docker'
 alias gcl="git fetch --prune; git br --merged master | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d % ; git br --merged main | grep -vE '^\*|main$|develop$' | xargs -I % git branch -d % ; git br --merged develop | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %; git br -vv"
 alias python=python3
-alias lg=lazygit
+alias w3m="w3m -B"
+alias lg='lazygit'
 alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
 
 zinit ice wait'!0'
@@ -169,19 +178,20 @@ if [[ -n "$RANGER_LEVEL" ]]; then
   PROMPT="%{$fg[cyan]%}(in ranger)%{$reset_color%} $PROMPT"
   fi
 
-  # ranger_cd 関数定義
-  ranger_cd() {
+# ranger_cd 関数定義
+ranger_cd() {
     local temp_file="$(mktemp -t ranger_cd.XXXXXXXXXX)"
     ranger --choosedir="$temp_file" -- "${@:-$PWD}"
     local chosen_dir="$(<"$temp_file")"
     [[ -n "$chosen_dir" && "$chosen_dir" != "$PWD" ]] && cd -- "$chosen_dir"
     rm -f -- "$temp_file"
-    }
+}
 
-  # Ctrl-O を ranger_cd にバインド
-  if (( $+commands[ranger] )) && [[ -o interactive ]]; then
-   bindkey -s '^O' 'ranger_cd\n'
-  fi
+# Ctrl-O を ranger_cd にバインド
+if (( $+commands[ranger] )) && [[ -o interactive ]]; then
+   bindkey -s '^O' 'ranger_cd
+'
+fi
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -208,3 +218,28 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/elpeople/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/elpeople/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/elpeople/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/elpeople/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+transej() {
+  echo -n "入力どうぞ: "
+  read -r input_text
+  trans -sl=en -tl=ja "$input_text"
+}
+
+export PATH="$HOME/.local/bin:$PATH"
+export GOPATH=$HOME
+export PATH=$PATH:$GOPATH/bin

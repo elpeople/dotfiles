@@ -60,3 +60,8 @@ bind-key -T copy-mode-vi v send-keys -X begin-selection
 #bind-key -T copy-mode-vi y send-keys -X copy-pipe "reattach-to-user-namespace pbcopy" \; send-keys -X clear-selection
 bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -sel clip -i"
 bind-key -T copy-mode-vi i send-keys -X cancel
+# viのyキーでコピーした際に、macOSのクリップボードにもコピーする
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+
+# マウスで選択した範囲をコピーした際に、macOSのクリップボードにもコピーする
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
