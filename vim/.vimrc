@@ -98,9 +98,9 @@ augroup END
 
 let g:airline#extension#tabline#enable = 1
 " , キーで次タブのバッファを表示
-nnoremap <silent> , :bprev<CR>
+"nnoremap <silent> , :bprev<CR>
 " . キーで前タブのバッファを表示
-nnoremap <silent> . :bnext<CR>
+"nnoremap <silent> . :bnext<CR>
 " bdで現在のバッファを削除
 
 """ unite.vim
