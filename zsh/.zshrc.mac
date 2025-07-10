@@ -152,12 +152,20 @@ ls_abbrev() {
 
     local ls_lines=$(echo "$ls_result" | wc -l | tr -d ' ')
 
-    if [ $ls_lines -gt 30 ]; then        printf "%s\n" "$ls_result" | head -n 15        echo '...'        printf "%s\n" "$ls_result" | tail -n 15        echo "$(command ls -1a | wc -l | tr -d ' ') files exist"    else        printf "%s\n" "$ls_result"    fi
+    if [ $ls_lines -gt 30 ]; then
+      printf "%s\n" "$ls_result" | head -n 15
+      echo '...'
+      printf "%s\n" "$ls_result" | tail -n 15
+      echo "$(command ls -1a | wc -l | tr -d ' ') files exist"
+    else
+      printf "%s\n" "$ls_result"
+    fi
 }
+
 # ranger 内から起動されたシェルでプロンプトを変更
 if [[ -n "$RANGER_LEVEL" ]]; then
   PROMPT="%{$fg[cyan]%}(in ranger)%{$reset_color%} $PROMPT"
-  fi
+fi
 
   # ranger_cd 関数定義
   ranger_cd() {
@@ -172,6 +180,26 @@ if [[ -n "$RANGER_LEVEL" ]]; then
   if (( $+commands[ranger] )) && [[ -o interactive ]]; then
    bindkey -s '^O' 'ranger_cd\n'
   fi
+  
+  # iTerm2で選択したテキストを読み上げる関数
+  speak_selection() {
+    # 読み上げ内容を一時ファイルに保存
+    local tmpfile
+    tmpfile=$(mktemp)
+
+    # 標準入力からテキストを読み込み、一時ファイルに書き出す
+    # iTerm2のキー設定により、選択範囲がここの標準入力に渡される
+    cat > "$tmpfile"
+
+    # ファイルに中身があればsayコマンドで読み上げる
+    if [[ -s "$tmpfile" ]]; then
+     say -f "$tmpfile"
+    fi
+
+    # 一時ファイルを削除
+    rm "$tmpfile"
+  }
+
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
