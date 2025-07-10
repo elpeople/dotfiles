@@ -1,6 +1,6 @@
 # シェルを設定してください
 #set-option -g default-shell /bin/zsh
-set-option -g default-shell /usr/bin/zsh
+set-option -g default-shell /bin/zsh
 
 # set prefix key
 set -g prefix C-g
