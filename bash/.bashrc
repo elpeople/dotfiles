@@ -66,3 +66,5 @@ ranger_cd() {
 if command -v ranger &> /dev/null; then
   bind -x '"\C-o": ranger_cd'
 fi
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

@@ -16,14 +16,14 @@ config.font_size = 10
 config.color_scheme = "Catppuccin Mocha"  -- 好きなカラースキーム名に変更可
 
 -- ウィンドウの背景透過
-config.window_background_opacity = 0.85
+config.window_background_opacity = 0.75
 
 -- 起動時にフルスクリーン
-local mux = wezterm.mux
-wezterm.on("gui-startup", function(cmd)
-  local tab, pane, window = mux.spawn_window(cmd or {})
-  window:gui_window():toggle_fullscreen()
-end)
+--local mux = wezterm.mux
+--wezterm.on("gui-startup", function(cmd)
+--  local tab, pane, window = mux.spawn_window(cmd or {})
+--  window:gui_window():toggle_fullscreen()
+--end)
 
 -- ショートカットキー設定
 local act = wezterm.action
@@ -37,16 +37,6 @@ config.keys = {
 
 -- WSL2 Debian用プロファイルの追加
 -- config.default_prog = { 'wsl.exe', '-d', 'Debian' }
-config.launch_menu = {
-  {
-    label = "PowerShell",
-    args = { "powershell.exe", "-NoLogo" },
-  },
-  {
-    label = "WSL Debian",
-    args = { "wsl.exe", "-d", "Debian" },
-  },
-}
 
 return config
 

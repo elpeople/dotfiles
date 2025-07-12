@@ -190,4 +190,5 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+exec --no-startup-id picom -CGm 0.70
 bindsym Mod1+Tab exec --no-startup-id rofi -show window
