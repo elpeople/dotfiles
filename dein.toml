@@ -29,6 +29,8 @@ hook_add = '''
 repo = 'Shougo/vimfiler'
 [[plugins]]
 repo = 'Shougo/unite.vim'
+[[plugins]]
+repo = 'Shougo/neomru.vim'
 
 #[[plugins]]
 #repo = 'thinca/vim-quickrun'
