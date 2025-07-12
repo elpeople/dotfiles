@@ -224,7 +224,7 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 ### End of Zinit's installer chunk
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+source /home/elpeople/.local/share/zinit/plugins/romkatv---powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -262,3 +262,8 @@ export NVM_DIR="$HOME/.nvm"
 
 alias ls='ls --color=auto'
 alias open='xdg-open'
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+export EDITOR=vim

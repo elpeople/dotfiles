@@ -36,7 +36,17 @@ config.keys = {
 }
 
 -- WSL2 Debian用プロファイルの追加
-config.default_prog = { 'wsl.exe', '-d', 'Debian' }
+-- config.default_prog = { 'wsl.exe', '-d', 'Debian' }
+config.launch_menu = {
+  {
+    label = "PowerShell",
+    args = { "powershell.exe", "-NoLogo" },
+  },
+  {
+    label = "WSL Debian",
+    args = { "wsl.exe", "-d", "Debian" },
+  },
+}
 
 return config
 

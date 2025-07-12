@@ -31,6 +31,29 @@ bash_prompt() {
     PS1="${C_USER}\u@\h${C_RESET}:${C_PATH}\w${C_RESET}${git_info}\n${C_PROMPT}\$ ${C_RESET}"
 }
 
+
+## alias
+alias ls='ls --color=auto'
+alias la='ls -Fa'
+alias ll='ls -Flh'
+alias lla='ls -Falh'
+alias ..='cd ../'
+alias ...='cd ../../'
+alias dcom='docker-compose'
+alias dk='docker'
+alias lg='lazygit'
+
+# Run the function before each prompt
+PROMPT_COMMAND=bash_prompt
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+export EDITOR=vim
+
 # Run the function before each prompt
 PROMPT_COMMAND=bash_prompt
 export NVM_DIR="$HOME/.nvm"
