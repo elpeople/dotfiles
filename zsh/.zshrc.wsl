@@ -183,19 +183,7 @@ if [[ -n "$RANGER_LEVEL" ]]; then
   PROMPT="%{$fg[cyan]%}(in ranger)%{$reset_color%} $PROMPT"
 fi
 
-  # ranger_cd 関数定義
-  ranger_cd() {
-    local temp_file="$(mktemp -t ranger_cd.XXXXXXXXXX)"
-    ranger --choosedir="$temp_file" -- "${@:-$PWD}"
-    local chosen_dir="$(<"$temp_file")"
-    [[ -n "$chosen_dir" && "$chosen_dir" != "$PWD" ]] && cd -- "$chosen_dir"
-    rm -f -- "$temp_file"
-    }
 
-  # Ctrl-O を ranger_cd にバインド
-  if (( $+commands[ranger] )) && [[ -o interactive ]]; then
-   bindkey -s '^O' 'ranger_cd\n'
-  fi
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -279,3 +267,17 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 bindkey -e
+
+# ranger_cd 関数定義
+ranger_cd() {
+  local temp_file="$(mktemp -t ranger_cd.XXXXXXXXXX)"
+  ranger --choosedir="$temp_file" -- "${@:-$PWD}"
+  local chosen_dir="$(<"$temp_file")"
+  [[ -n "$chosen_dir" && "$chosen_dir" != "$PWD" ]] && cd -- "$chosen_dir"
+  rm -f -- "$temp_file"
+}
+
+# Ctrl-O を ranger_cd にバインド
+if (( $+commands[ranger] )) && [[ -o interactive ]]; then
+ bindkey -s '^O' 'ranger_cd\n'
+fi
