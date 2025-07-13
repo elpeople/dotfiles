@@ -68,3 +68,7 @@ if command -v ranger &> /dev/null; then
 fi
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export PATH=~/.npm-global/bin:$PATH
+
+# SSH自動起動
+/usr/local/bin/start-ssh.sh
