@@ -47,6 +47,12 @@ PYGMENTIZE_STYLE=${PYGMENTIZE_STYLE:-autumn}
 OPENSCAD_IMGSIZE=${RNGR_OPENSCAD_IMGSIZE:-1000,1000}
 OPENSCAD_COLORSCHEME=${RNGR_OPENSCAD_COLORSCHEME:-Tomorrow Night}
 
+handle_pdf() {
+    # Previews PDF using pdftotext
+    pdftotext -layout "$1" - 2>/dev/null | head -n 100
+    exit 0
+}
+
 handle_extension() {
     case "${FILE_EXTENSION_LOWER}" in
         ## Archive
@@ -64,20 +70,14 @@ handle_extension() {
             7z l -p -- "${FILE_PATH}" && exit 5
             exit 1;;
 
-        # PDF
-        handle_pdf() {
-            # Previews PDF using pdftotext
-            pdftotext -layout "$1" - 2>/dev/null | head -n 100
-            exit 0
-        }
+        ## PDF
         pdf)
-
-handndle_pdf ;;
-             # Preview as text conversion
-        #     pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - | fmt -w ${PV_WIDTH} && exit 5
-        #     mutool draw -F txt -i -- "${FILE_PATH}" 1-10 | fmt -w ${PV_WIDTH} && exit 5
-        #     exiftool "${FILE_PATH}" && exit 5
-        #     exit 1;;
+            handle_pdf "${FILE_PATH}"
+            ## Alternative preview methods (commented out):
+            # pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - | fmt -w ${PV_WIDTH} && exit 5
+            # mutool draw -F txt -i -- "${FILE_PATH}" 1-10 | fmt -w ${PV_WIDTH} && exit 5
+            # exiftool "${FILE_PATH}" && exit 5
+            exit 1;;
 
         ## BitTorrent
         torrent)
