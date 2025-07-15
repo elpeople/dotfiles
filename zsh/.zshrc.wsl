@@ -133,9 +133,9 @@ alias webui-all='openwebui & sleep 3 && comfyui-gpu'
 
 zinit ice wait'!0'
 zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
-zinit light zdharma/history-search-multi-word
+zinit light zdharma-continuum/history-search-multi-word
 zinit light b4b4r07/enhancd
 zinit light romkatv/powerlevel10k
 
@@ -261,6 +261,7 @@ export NVM_DIR="$HOME/.nvm"
 
 alias ls='ls --color=auto'
 alias open='xdg-open'
+alias tmux='env -i PATH=/usr/bin:/bin:/usr/local/bin SHELL=/usr/bin/zsh tmux'
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

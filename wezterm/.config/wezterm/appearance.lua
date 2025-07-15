@@ -3,8 +3,8 @@ local module = {}
 
 local appearance = {
   -- background
-  window_background_opacity = 0.7,
-  macos_window_background_blur = 13,
+  window_background_opacity = 0.85,  -- 透明度85%でバックグラウンドのYouTubeが見えるように
+  macos_window_background_blur = 0,
 
   -- font
   font_size = 13.0,
@@ -35,7 +35,7 @@ local appearance = {
   --pane
   inactive_pane_hsb = {
     saturation = 1.0,
-    brightness = 0.5,
+    brightness = 1.0,  -- 非アクティブペインの視覚効果を完全に無効化
   },
   default_cursor_style = "SteadyBlock", -- BlinkingBlock, SteadyUnderline, BlinkingUnderline, SteadyBar, BlinkingBar
   hide_mouse_cursor_when_typing = true,

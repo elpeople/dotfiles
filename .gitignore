@@ -1,0 +1,61 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Compiled files
+*.zwc
+*.pyc
+*.pyo
+__pycache__/
+
+# Log files
+*.log
+*.tmp
+
+# Backup files
+*.bak
+*.old
+*.orig
+
+# Node modules
+node_modules/
+
+# Local configuration
+.env
+.env.local
+
+# Cache directories
+.cache/
+.npm/
+
+# Temporary files
+tmp/
+temp/
+
+# Personal/sensitive files
+.secrets
+.private
+
+# Plugin/package manager files
+# (these should be managed by the respective package managers)
+zsh/.zinit/
+vim/.vim/bundle/
+tmux/.tmux/plugins/
+nvim/.local/share/nvim/
+
+# Ignore old dotfiles directories
+dotfiles_old/
+dotfiles_old2/
+old/

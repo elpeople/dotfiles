@@ -128,9 +128,9 @@ alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
 
 zinit ice wait'!0'
 zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
-zinit light zdharma/history-search-multi-word
+zinit light zdharma-continuum/history-search-multi-word
 zinit light b4b4r07/enhancd
 zinit light romkatv/powerlevel10k
 
@@ -214,7 +214,7 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 ### End of Zinit's installer chunk
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+# powerlevel10k theme is loaded via zinit
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

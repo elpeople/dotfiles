@@ -1,0 +1,22 @@
+# Stow configuration file
+# Target directory (where symlinks will be created)
+--target=..
+
+# Ignore patterns
+--ignore=\.git
+--ignore=\.gitignore
+--ignore=\.gitmodules
+--ignore=README\.md
+--ignore=\.stowrc
+--ignore=install\.sh
+--ignore=Makefile
+--ignore=\.DS_Store
+--ignore=Thumbs\.db
+--ignore=\.vscode
+--ignore=\.idea
+--ignore=node_modules
+--ignore=\.zwc$
+--ignore=\.log$
+--ignore=\.tmp$
+--ignore=\.bak$
+--ignore=\.old$

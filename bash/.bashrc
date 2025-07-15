@@ -72,3 +72,30 @@ export PATH=~/.npm-global/bin:$PATH
 
 # SSH自動起動
 /usr/local/bin/start-ssh.sh
+
+# Japanese Input Method (Mozc/IBus)
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+
+# ロケール設定（日本語表示対応）
+export LANG=ja_JP.UTF-8
+export LC_ALL=ja_JP.UTF-8
+
+# 日本語入力切り替え時にプロンプトをクリアする関数
+clear_prompt_japanese() {
+    # プロンプトをクリア
+    printf '\033[2K\r'
+    # 新しいプロンプトを表示
+    if [ -n "$PS1" ]; then
+        printf "$PS1"
+    fi
+}
+
+# 入力メソッド切り替えのエイリアス
+alias ime-ja='ibus engine mozc-jp && clear_prompt_japanese'
+alias ime-en='ibus engine xkb:us::eng && clear_prompt_japanese'
+alias ime-toggle='ibus engine $([ "$(ibus engine)" = "mozc-jp" ] && echo "xkb:us::eng" || echo "mozc-jp") && clear_prompt_japanese'
+
+# Ctrl+Spaceで入力メソッド切り替え（ターミナル用）
+bind '"\C-@": "ime-toggle\n"'

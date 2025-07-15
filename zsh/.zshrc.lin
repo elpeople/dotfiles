@@ -123,9 +123,9 @@ alias python=python3
 
 zinit ice wait'!0'
 zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
-zinit light zdharma/history-search-multi-word
+zinit light zdharma-continuum/history-search-multi-word
 zinit light b4b4r07/enhancd
 zinit light romkatv/powerlevel10k
 
@@ -224,7 +224,7 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 ### End of Zinit's installer chunk
-source /home/elpeople/.local/share/zinit/plugins/romkatv---powerlevel10k/powerlevel10k.zsh-theme
+# powerlevel10k theme is loaded via zinit
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -262,6 +262,7 @@ export NVM_DIR="$HOME/.nvm"
 
 alias ls='ls --color=auto'
 alias open='xdg-open'
+alias tmux='env -i PATH=/usr/bin:/bin:/usr/local/bin SHELL=/usr/bin/zsh tmux'
 
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus

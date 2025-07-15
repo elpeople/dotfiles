@@ -66,27 +66,4 @@ bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
 # マウスで選択した範囲をコピーした際に、macOSのクリップボードにもコピーする
 bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
 
-# TPM Plugin Manager設定
-# プラグインディレクトリの設定
-set-environment -g TMUX_PLUGIN_MANAGER_PATH '~/.config/tmux/plugins/'
-
-# プラグインリスト
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-yank'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @plugin 'catppuccin/tmux'
-set -g @plugin 'fcsonline/tmux-thumbs'
-set -g @plugin 'sainnhe/tmux-fzf'
-set -g @plugin 'wfxr/tmux-fzf-url'
-
-# プラグイン設定
-set -g @resurrect-strategy-vim 'session'
-set -g @resurrect-strategy-nvim 'session'
-set -g @continuum-restore 'on'
-set -g @continuum-save-interval '15'
-
-# TPMの初期化（この行は設定ファイルの最後に置く必要があります）
-display-message "TPM script is about to run."
-run '~/.config/tmux/plugins/tpm/tpm'
+# TPM設定は tmux.conf で管理されています
