@@ -111,6 +111,19 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
+# emacsキーバインドを設定
+bindkey -e
+
+# 基本的なemacsキーバインドを明示的に設定
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+bindkey '^B' backward-char
+bindkey '^F' forward-char
+bindkey '^K' kill-line
+bindkey '^U' kill-whole-line
+bindkey '^W' backward-kill-word
+bindkey '^Y' yank
+
 ## alias
 alias ls='ls -FG'
 alias la='ls -Fa'

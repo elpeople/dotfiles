@@ -231,6 +231,36 @@ zinit light-mode for \
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Linux用Homebrew設定
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# opencode
+export PATH=/home/elpeople/.opencode/bin:$PATH
+
+# 日本語入力切り替え時にプロンプトをクリアする関数（Zsh用）
+clear_prompt_japanese_zsh() {
+    # プロンプトをクリア
+    printf '\033[2K\r'
+    # zshのプロンプトを再表示
+    zle reset-prompt 2>/dev/null || true
+}
+
+# 入力メソッド切り替えのエイリアス（Zsh用）
+alias ime-ja='ibus engine mozc-jp && clear_prompt_japanese_zsh'
+alias ime-en='ibus engine xkb:us::eng && clear_prompt_japanese_zsh'
+alias ime-toggle='ibus engine $([ "$(ibus engine)" = "mozc-jp" ] && echo "xkb:us::eng" || echo "mozc-jp") && clear_prompt_japanese_zsh'
+
+# Zsh用キーバインド
+if [ -n "$ZSH_VERSION" ]; then
+    # Ctrl+Spaceで入力メソッド切り替え
+    ime_toggle_widget() {
+        ibus engine $([ "$(ibus engine)" = "mozc-jp" ] && echo "xkb:us::eng" || echo "mozc-jp")
+        clear_prompt_japanese_zsh
+    }
+    zle -N ime_toggle_widget
+    bindkey '^@' ime_toggle_widget
+fi
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 # The following macOS-specific conda setup has been commented out.
