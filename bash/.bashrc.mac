@@ -118,6 +118,8 @@ alias lg="lazygit"
 alias wttr='curl wttr.in/fukuoka'
 alias wttr2='curl v2.wttr.in/fukuoka'
 alias acli='~/.local/share/acli/acli'
+alias mpc='mpc'
+alias rmpc='rmpc'
 
 # trans
 #trans() {
