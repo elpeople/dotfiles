@@ -42,6 +42,9 @@ alias ...='cd ../../'
 alias dcom='docker-compose'
 alias dk='docker'
 alias lg='lazygit'
+alias wttr='curl wttr.in/fukuoka'
+alias wttr2='curl v2.wttr.in/fukuoka'
+alias acli='~/.local/share/acli/acli'
 
 # Run the function before each prompt
 PROMPT_COMMAND=bash_prompt

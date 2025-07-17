@@ -115,6 +115,9 @@ alias w3m='w3m -B'
 alias open='/mnt/c/windows/explorer.exe .'
 alias afxw='"/mnt/c/bin/afxw/afxw.exe" & disown'
 alias lg="lazygit"
+alias wttr='curl wttr.in/fukuoka'
+alias wttr2='curl v2.wttr.in/fukuoka'
+alias acli='~/.local/share/acli/acli'
 
 # trans
 #trans() {

@@ -122,6 +122,7 @@ alias wttr2='curl v2.wttr.in/fukuoka'
 alias dcom='docker-compose'
 alias dk='docker'
 alias lg='lazygit'
+alias acli='~/.local/share/acli/acli'
 alias gcl="git fetch --prune; git br --merged master | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d % ; git br --merged main | grep -vE '^\*|main$|develop$' | xargs -I % git branch -d % ; git br --merged develop | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %; git br -vv"
 alias python=python3
 # alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs" # For macOS
