@@ -141,7 +141,7 @@ alias lg='lazygit'
 alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
 alias wttr='curl wttr.in/fukuoka'
 alias wttr2='curl v2.wttr.in/fukuoka'
-alias acli='~/.local/share/acli/acli'
+#alias acli='acli rovodev run'
 alias mpc='mpc'
 alias rmpc='rmpc'
 

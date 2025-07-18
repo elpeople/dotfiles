@@ -47,3 +47,6 @@ export NVM_DIR="$HOME/.nvm"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# Atlassian CLI (acli) のエイリアス
+#alias acli="/Users/elpeople/.local/share/acli/plugin/rovodev/atlassian_cli_rovodev"

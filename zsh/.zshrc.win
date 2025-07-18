@@ -7,3 +7,20 @@ alias open='explorer.exe'
 
 # 色設定など
 alias ls='ls --color=auto'
+alias la='ls -Fa'
+alias ll='ls -Flh'
+alias lla='ls -Falh'
+alias ..='cd ../'
+alias ...='cd ../../'
+alias dcom='docker-compose'
+alias dk='docker'
+alias lg='lazygit'
+alias gcl="git fetch --prune; git br --merged master | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d % ; git br --merged main | grep -vE '^\*|main$|develop$' | xargs -I % git branch -d % ; git br --merged develop | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %; git br -vv"
+alias python=python3
+alias w3m="w3m -B"
+alias wttr='curl wttr.in/fukuoka'
+alias wttr2='curl v2.wttr.in/fukuoka'
+alias acli='acli rovodev run'
+alias mpc='mpc'
+alias rmpc='rmpc'
+# alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs" # For macOS

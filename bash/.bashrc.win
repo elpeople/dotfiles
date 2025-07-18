@@ -1,0 +1,34 @@
+# ~/.bashrc.win - Windows (Git Bash/MSYS2/Cygwin) (-š
+
+# Windowsn¨¤ê¢¹
+alias explorer='explorer.exe'
+alias clip='clip.exe'
+alias open='explorer.exe'
+
+# ú,„jlsû¨¤ê¢¹
+alias ls='ls --color=auto'
+alias la='ls -Fa'
+alias ll='ls -Flh'
+alias lla='ls -Falh'
+alias ..='cd ../'
+alias ...='cd ../../'
+
+# Docker¢#
+alias dcom='docker-compose'
+alias dk='docker'
+
+# Git¢#
+alias lg='lazygit'
+alias gcl="git fetch --prune; git br --merged master | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d % ; git br --merged main | grep -vE '^\*|main$|develop$' | xargs -I % git branch -d % ; git br --merged develop | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %; git br -vv"
+
+# ]nÖn¨¤ê¢¹
+alias python=python3
+alias w3m="w3m -B"
+alias wttr='curl wttr.in/fukuoka'
+alias wttr2='curl v2.wttr.in/fukuoka'
+alias acli='acli rovodev run'
+alias mpc='mpc'
+alias rmpc='rmpc'
+
+# macOS(¨¤ê¢¹³áóÈ¢¦È	
+# alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs" # For macOS

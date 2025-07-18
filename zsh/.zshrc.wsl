@@ -131,6 +131,10 @@ alias comfyui-gpu='cd ~/comfyui/ComfyUI && python main.py --highvram'
 alias comfyui-fast='cd ~/comfyui/ComfyUI && python main.py --highvram --fast'
 alias openwebui='~/.local/bin/owuolm/bin/open-webui serve'
 alias webui-all='openwebui & sleep 3 && comfyui-gpu'
+alias w3m="w3m -B"
+alias mpc='mpc'
+alias rmpc='rmpc'
+# alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs" # For macOS
 
 zinit ice wait'!0'
 zinit light zsh-users/zsh-autosuggestions
