@@ -1,4 +1,3 @@
-display-message "DEBUG: ~/.tmux.conf.wsl is being sourced."
 # シェルを設定してください
 #set-option -g default-shell /bin/zsh
 set-option -g default-shell /usr/bin/zsh
@@ -50,6 +49,44 @@ bind -r L resize-pane -R 3
 # remove pane
 bind q kill-pane
 
+##### Display Popups ##### 
+
+bind C-y display-popup \
+  -d "#{pane_current_path}" \
+  -w 80% \
+  -h 80% \
+  -E "lazygit"
+bind C-n display-popup -E 'bash -i -c "read -p \"Session name: \" name; tmux new-session -d -s \$name && tmux switch-client -t \$name"'
+bind C-j display-popup -E "tmux list-sessions | sed -E 's/:.*$//' | grep -v \"^$(tmux display-message -p '#S')\$\" | fzf --reverse | xargs tmux switch-client -t"
+bind C-p display-popup -E "ipython"
+bind C-f display-popup \
+  -w 80% \
+  -h 80% \
+  -E 'rmpc'
+bind C-r display-popup \
+  -d "#{pane_current_path}" \
+  -w 90% \
+  -h 90% \
+  -E "ranger"
+bind C-z display-popup \
+  -w 80% \
+  -h 80% \
+  -E 'nvim ~/.zshrc'
+bind C-g display-popup -E "bash -i ~/.tmux/scripts/chat-popup.sh"
+bind C-t display-popup \
+  -d "#{pane_current_path}" \
+  -w 75% \
+  -h 75% \
+  -E "zsh"
+
+##### Display Menu ##### 
+
+bind d display-menu -T "#[align=centre]Dotfiles" -x C -y C \
+  ".zshrc"            z  "display-popup -E 'nvim ~/.zshrc'" \
+  ".tmux.conf"        t  "display-popup -E 'nvim ~/.tmux.conf'" \
+  ".sketchybarrc"     s  "display-popup -d "~/.config/sketchybar" -E 'nvim ~/.config/sketchybar/sketchybarrc'" \
+  "Exit"              q  ""
+
 # copy mode settings
 # start copy mode <C-s> + y
 bind y copy-mode
@@ -59,15 +96,7 @@ setw -g mode-keys vi
 # USAGE) v: start select, y: yank, i: back to normal mode
 bind-key -T copy-mode-vi v send-keys -X begin-selection
 #bind-key -T copy-mode-vi y send-keys -X copy-pipe "reattach-to-user-namespace pbcopy" \; send-keys -X clear-selection
-# WSL環境でのクリップボード最適化
-if-shell "grep -q Microsoft /proc/version" \
-    "bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'clip.exe'" \
-    "bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -sel clip -i'"
-
-if-shell "grep -q Microsoft /proc/version" \
-    "bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'clip.exe'" \
-    "bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'xclip -sel clip -i'"
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -sel clip -i"
 bind-key -T copy-mode-vi i send-keys -X cancel
 
 # TPM設定は tmux.conf で管理されています
-

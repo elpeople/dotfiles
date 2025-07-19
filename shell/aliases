@@ -67,7 +67,7 @@ case "$(uname -s)" in
         ;;
     Darwin*)
         # For macOS
-        alias ls='ls -G'
+        
         alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
         ;;
 esac

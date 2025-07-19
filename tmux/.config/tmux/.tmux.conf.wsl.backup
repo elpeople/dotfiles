@@ -59,14 +59,7 @@ setw -g mode-keys vi
 # USAGE) v: start select, y: yank, i: back to normal mode
 bind-key -T copy-mode-vi v send-keys -X begin-selection
 #bind-key -T copy-mode-vi y send-keys -X copy-pipe "reattach-to-user-namespace pbcopy" \; send-keys -X clear-selection
-# WSL環境でのクリップボード最適化
-if-shell "grep -q Microsoft /proc/version" \
-    "bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'clip.exe'" \
-    "bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -sel clip -i'"
-
-if-shell "grep -q Microsoft /proc/version" \
-    "bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'clip.exe'" \
-    "bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'xclip -sel clip -i'"
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -sel clip -i"
 bind-key -T copy-mode-vi i send-keys -X cancel
 
 # TPM設定は tmux.conf で管理されています

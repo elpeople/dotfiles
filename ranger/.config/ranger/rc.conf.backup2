@@ -24,7 +24,7 @@
 #     miller: Use miller columns which show multiple levels of the hierarchy
 #     multipane: Midnight-commander like multipane view showing all tabs next
 #                to each other
-# set default_editor vim
+set default_editor vim
 set viewmode miller
 #set viewmode multipane
 
@@ -141,7 +141,7 @@ set show_hidden_bookmarks true
 # Which colorscheme to use?  These colorschemes are available by default:
 # default, jungle, snow, solarized
 #set colorscheme default
-set colorscheme catppuccin_mocha
+set colorscheme catppuccin
 
 
 
@@ -764,5 +764,3 @@ tmap <delete>   eval -q fm.ui.taskview.task_remove()
 tmap <C-l> redraw_window
 tmap <ESC> taskview_close
 copytmap <ESC> q Q w <C-c>
-
-# Editor settings
