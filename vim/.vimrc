@@ -23,26 +23,43 @@ else
 endif
 
 " dein settings {{{
-" dein自体の自動インストール
-let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
-let s:dein_dir = s:cache_home . '/dein'
+let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
 if !isdirectory(s:dein_repo_dir)
-  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+  echo "Installing dein.vim..."
+  silent !git clone https://github.com/Shougo/dein.vim " . shellescape(s:dein_repo_dir)
+  echo "Done."
 endif
-let &runtimepath = s:dein_repo_dir .",". &runtimepath
-" プラグイン読み込み＆キャッシュ作成
-let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
+
+execute 'set runtimepath^=' . s:dein_repo_dir
+
+" Dein.vimの初期化と設定
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
-  call dein#load_toml(s:toml_file)
+  
+  " dein.tomlを読み込む
+  call dein#load_toml(expand('<sfile>:h') . '/dein.toml')
+  
+  " Dein.vimの終了処理
   call dein#end()
   call dein#save_state()
 endif
-" 不足プラグインの自動インストール
-if has('vim_starting') && dein#check_install()
+
+" プラグインのインストールが必要な場合
+if dein#check_install()
   call dein#install()
 endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" deinコマンドの定義
+command! DeinInstall call dein#install()
+command! DeinUpdate call dein#update()
+command! DeinClean call map(dein#check_clean(), "delete(v:val, 'rf')")
+command! DeinRecache call dein#recache_runtimepath()
 " }}}
 
 " プラグイン以外のその他設定が続く
@@ -81,7 +98,7 @@ set smartindent
 " set history=50
 " set virtualedit=block
 " set whichwrap=b,s,[,],<,>
-" set backspace=indent,eol,start
+set backspace=indent,eol,start
 set wildmenu
 
 " leaderキーをspaceに設定

@@ -299,6 +299,10 @@ handle_mime() {
 
         ## Text
         text/* | */xml)
+            ## .python_history file
+            if [[ "${FILE_PATH}" == *".python_history" ]]; then
+                exit 1
+            fi
             ## Syntax highlight
             if [[ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
                 exit 2

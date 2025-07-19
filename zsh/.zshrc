@@ -25,6 +25,13 @@ fi
 export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 
+
+
+# Load common aliases
+if [ -f "$HOME/dotfiles/shell/aliases" ]; then
+    source "$HOME/dotfiles/shell/aliases"
+fi
+
 # 環境ごとの分岐
 case "$(uname)" in
   Darwin)

@@ -1,0 +1,73 @@
+#!/bin/bash
+
+#==============================================================================
+# Universal Aliases & Functions
+#==============================================================================
+# These aliases and functions are available on all operating systems.
+
+alias la='ls -Fa'
+alias ll='ls -Flh'
+alias lla='ls -Falh'
+alias ..='cd ../'
+alias ...='cd ../../'
+alias dcom='docker-compose'
+alias dk='docker'
+alias lg='lazygit'
+alias wttr='curl wttr.in/fukuoka'
+alias wttr2='curl v2.wttr.in/fukuoka'
+alias python=python3
+alias w3m="w3m -B"
+alias mpc='mpc'
+alias rmpc='rmpc'
+alias gcl="git fetch --prune && git branch --merged | grep -vE '^\*|master$|main$|develop$' | xargs git branch -d"
+
+# Function to translate English to Japanese
+transej() {
+    echo -n "Enter English text: "
+    read -r input_text
+    trans -sl=en -tl=ja "$input_text"
+}
+
+# Function to kill processes using fzf
+fkill() {
+  local pids
+  pids=$(ps -ef | sed 1d | fzf -m --tac | awk '{print $2}')
+
+  if [[ -z "$pids" ]]; then
+    echo "No process selected."
+    return
+  fi
+
+  echo "$pids" | tr ' ' '\n' | xargs -I{} sh -c 'echo "Killing PID: {} $(ps -p {} -o comm=)"; kill -9 {}'
+}
+
+#==============================================================================
+# OS-Specific Aliases
+#==============================================================================
+# The aliases below are loaded based on the detected operating system.
+
+case "$(uname -s)" in
+    Linux*)
+        # For Linux systems
+        alias ls='ls --color=auto'
+        alias open='xdg-open'
+
+        if grep -q -i "microsoft" /proc/version 2>/dev/null; then
+            # For WSL (Windows Subsystem for Linux)
+            alias tmux='env -i PATH=/usr/bin:/bin:/usr/local/bin SHELL=/usr/bin/zsh tmux'
+            alias comfyui='cd ~/comfyui/ComfyUI && python main.py'
+            alias comfyui-gpu='cd ~/comfyui/ComfyUI && python main.py --highvram'
+            alias comfyui-fast='cd ~/comfyui/ComfyUI && python main.py --highvram --fast'
+            alias openwebui='~/.local/bin/owuolm/bin/open-webui serve'
+            alias webui-all='openwebui & sleep 3 && comfyui-gpu'
+        else
+            # For standard Linux distributions
+            alias tmux='env -i PATH=/usr/bin:/bin:/usr/local/bin SHELL=/usr/bin/zsh tmux'
+        fi
+        ;;
+    Darwin*)
+        # For macOS
+        alias ls='ls -G'
+        alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
+        ;;
+esac

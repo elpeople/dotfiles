@@ -8,6 +8,11 @@ esac
 
 echo "DEBUG: ~/.bashrc is being executed."
 
+# Load common aliases
+if [ -f "$HOME/dotfiles/shell/aliases" ]; then
+    source "$HOME/dotfiles/shell/aliases"
+fi
+
 # Load OS-specific bashrc
 if [ -n "$WSL_DISTRO_NAME" ]; then
     echo "DEBUG: Detected WSL environment."

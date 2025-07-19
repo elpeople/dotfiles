@@ -203,19 +203,7 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # fkillでプロセスをkillする関数
-fkill() {
-  # psのヘッダー行を除いてfzfに渡し、複数選択(-m)を可能にする
-  local pids
-  pids=$(ps -ef | sed 1d | fzf -m --tac | awk '{print $2}')
 
-  if [[ -z "$pids" ]]; then
-    echo "プロセスが選択されませんでした。"
-    return
-  fi
-
-  # 選択されたPIDをループしてkillコマンドを実行
-  echo "$pids" | tr ' ' '\n' | xargs -I{} sh -c 'echo "Killing PID: {} $(ps -p {} -o comm=)"; kill -9 {}'
-}
 
 
 # Load a few important annexes, without Turbo

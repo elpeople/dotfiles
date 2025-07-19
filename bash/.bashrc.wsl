@@ -52,7 +52,6 @@ eval "$(dircolors -b ~/.dircolors)"
 
 LS_COLORS="fi=38;5;216"
 export LS_COLORS
-alias ls='ls --color=auto'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 #case "$TERM" in
@@ -107,34 +106,17 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -l'
-alias w3m='w3m -B'
 # open explorer
-alias open='/mnt/c/windows/explorer.exe .'
-alias afxw='"/mnt/c/bin/afxw/afxw.exe" & disown'
-alias lg="lazygit"
-alias wttr='curl wttr.in/fukuoka'
-alias wttr2='curl v2.wttr.in/fukuoka'
-alias acli='~/.local/share/acli/acli'
-alias mpc='mpc'
-alias rmpc='rmpc'
 
 # trans
 #trans() {
 #    trans -sl=en -tl=ja "$@"
 #}
 
-transej() {
-    echo "入力どうぞ:"
-    read -r input_text
-    trans -sl=en -tl=ja "$input_text"
-}
+
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert="notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e 's/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//')""
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.

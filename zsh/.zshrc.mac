@@ -253,11 +253,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-transej() {
-  echo -n "入力どうぞ: "
-  read -r input_text
-  trans -sl=en -tl=ja "$input_text"
-}
+
 
 export PATH="$HOME/.local/bin:$PATH"
 export GOPATH=$HOME

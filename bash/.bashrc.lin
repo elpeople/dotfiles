@@ -32,19 +32,7 @@ bash_prompt() {
 }
 
 
-## alias
-alias ls='ls --color=auto'
-alias la='ls -Fa'
-alias ll='ls -Flh'
-alias lla='ls -Falh'
-alias ..='cd ../'
-alias ...='cd ../../'
-alias dcom='docker-compose'
-alias dk='docker'
-alias lg='lazygit'
-alias wttr='curl wttr.in/fukuoka'
-alias wttr2='curl v2.wttr.in/fukuoka'
-alias acli='~/.local/share/acli/acli'
+
 
 # Run the function before each prompt
 PROMPT_COMMAND=bash_prompt
