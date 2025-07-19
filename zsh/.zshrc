@@ -57,3 +57,40 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # Atlassian CLI (acli) のエイリアス
 #alias acli="/Users/elpeople/.local/share/acli/plugin/rovodev/atlassian_cli_rovodev"
+# Catppuccin theme configuration
+# Load Catppuccin syntax highlighting
+if [[ -f ~/.config/zsh/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh ]]; then
+    source ~/.config/zsh/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
+fi
+
+# Load Catppuccin Powerlevel10k colors
+if [[ -f ~/.config/zsh/p10k-catppuccin.zsh ]]; then
+    source ~/.config/zsh/p10k-catppuccin.zsh
+fi
+
+# Catppuccin LS colors
+export LS_COLORS="di=38;2;137;180;250:fi=38;2;205;214;244:ln=38;2;148;226;213:ex=38;2;166;227;161:*.jpg=38;2;245;194;231:*.png=38;2;245;194;231:*.gif=38;2;245;194;231"
+
+# FZF Catppuccin theme
+if [[ -f ~/.config/fzf/catppuccin-mocha.sh ]]; then
+    source ~/.config/fzf/catppuccin-mocha.sh
+fi
+
+# bat as cat replacement with catppuccin
+alias cat='bat'
+alias less='bat'
+
+# fzf integration with bat preview
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+# Additional CLI tools with Catppuccin
+# eza (exa successor)
+if [[ -f ~/.config/eza/catppuccin-mocha.sh ]]; then
+    source ~/.config/eza/catppuccin-mocha.sh
+fi
+
+# ripgrep
+if [[ -f ~/.config/ripgrep/catppuccin-mocha.sh ]]; then
+    source ~/.config/ripgrep/catppuccin-mocha.sh
+fi

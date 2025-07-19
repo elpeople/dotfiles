@@ -104,3 +104,32 @@ alias ime-toggle='ibus engine $([ "$(ibus engine)" = "mozc-jp" ] && echo "xkb:us
 
 # Ctrl+Spaceで入力メソッド切り替え（ターミナル用）
 bind '"\C-@": "ime-toggle\n"'
+
+# Catppuccin Mocha theme
+if [[ -f ~/.config/bash/catppuccin-mocha.sh ]]; then
+    source ~/.config/bash/catppuccin-mocha.sh
+fi
+
+# FZF Catppuccin theme
+if [[ -f ~/.config/fzf/catppuccin-mocha.sh ]]; then
+    source ~/.config/fzf/catppuccin-mocha.sh
+fi
+
+# bat as cat replacement with catppuccin
+alias cat='bat'
+alias less='bat'
+
+# fzf integration with bat preview
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+# Additional CLI tools with Catppuccin
+# eza (exa successor)
+if [[ -f ~/.config/eza/catppuccin-mocha.sh ]]; then
+    source ~/.config/eza/catppuccin-mocha.sh
+fi
+
+# ripgrep
+if [[ -f ~/.config/ripgrep/catppuccin-mocha.sh ]]; then
+    source ~/.config/ripgrep/catppuccin-mocha.sh
+fi

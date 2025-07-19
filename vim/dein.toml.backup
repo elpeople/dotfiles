@@ -12,20 +12,28 @@ repo = 'Shougo/context_filetype.vim'
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
-[[plugins]] # Catppuccin colorscheme
-repo = 'catppuccin/vim'
-name = 'catppuccin'
+[[plugins]] # カラースキーマ
+repo = 'w0ng/vim-hybrid'
 hook_add = '''
-  set termguicolors
   set background=dark
-  let g:catppuccin_flavour = "mocha"
-  au MyAutoCmd VimEnter * nested colorscheme catppuccin_mocha
+  " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
+  " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+  au MyAutoCmd VimEnter * nested colorscheme hybrid
 '''
 
+#[[plugins]]
+#repo = 'Shougo/vimproc'
+#[[plugins]]
+#repo = 'Shougo/vimshell'
 [[plugins]]
 repo = 'Shougo/vimfiler'
 [[plugins]]
 repo = 'Shougo/unite.vim'
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+#[[plugins]]
+#repo = 'thinca/vim-quickrun'
 
 [[plugins]]
 repo = 'davidoc/taskpaper.vim'
@@ -40,7 +48,8 @@ repo = 'airblade/vim-gitgutter'
 repo = 'scrooloose/nerdtree'
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
-
+#[[plugins]]
+#repo = 'ryanoasis/nerd-fonts'
 [[plugins]]
 repo = 'junegunn/fzf.vim'
 [[plugins]]
@@ -49,14 +58,8 @@ repo = 'junegunn/fzf'
 repo = 'tpope/vim-repeat'
 [[plugins]]
 repo = 'tpope/vim-commentary'
-
-[[plugins]] # vim-airline with catppuccin theme
+[[plugins]]
 repo = 'vim-airline/vim-airline'
-hook_add = '''
-  let g:airline_theme = 'catppuccin_mocha'
-  let g:airline_powerline_fonts = 1
-'''
-
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes' 
 [[plugins]]
@@ -91,3 +94,9 @@ repo = 'mattn/sonictemplate-vim'
 repo = 'reireias/vim-cheatsheet'
 [[plugins]]
 repo = 'simeji/winresizer' 
+#[[plugins]]
+#repo = 'kana/vim-operator-replace'
+
+
+# other plugins
+# :
