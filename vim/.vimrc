@@ -107,14 +107,7 @@ let mapleader = "\<Space>"
 " .vimrcを開く
 nnoremap <leader>. :edit $MYVIMRC<CR>
 
-augroup TransparentBG
-autocmd!
-autocmd Colorscheme * highlight Normal ctermbg=none
-autocmd Colorscheme * highlight NonText ctermbg=none
-autocmd Colorscheme * highlight LineNr ctermbg=none
-autocmd Colorscheme * highlight Folded ctermbg=none
-autocmd Colorscheme * highlight EndOfBuffer ctermbg=none
-augroup END
+
 
 let g:airline#extension#tabline#enable = 1
 " , キーで次タブのバッファを表示
@@ -280,4 +273,10 @@ set termguicolors
 let g:airline_powerline_fonts = 1
 
 " Catppuccin 設定
+
+highlight Normal ctermbg=NONE guibg=NONE
+highlight NonText ctermbg=NONE guibg=NONE
+highlight LineNr ctermbg=NONE guibg=NONE
+highlight Folded ctermbg=NONE guibg=NONE
+highlight EndOfBuffer ctermbg=NONE guibg=NONE
 

@@ -1,0 +1,14 @@
+# Catppuccin Mocha theme for bat
+--theme="Catppuccin Mocha"
+
+# Show line numbers
+--style="numbers,changes,header"
+
+# Use italic text on the terminal
+--italic-text=always
+
+# Show git modifications
+--decorations=always
+
+# Set the tab width to 4 spaces
+--tabs=4

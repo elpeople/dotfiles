@@ -1,0 +1,125 @@
+// Catppuccin Mocha theme for rmpc
+Config(
+    address: "localhost:6600",
+    theme: Theme(
+        // Catppuccin Mocha color palette
+        background: Rgb(30, 30, 46),           // base
+        foreground: Rgb(205, 214, 244),        // text
+        
+        // Primary colors
+        primary: Rgb(137, 180, 250),           // blue
+        secondary: Rgb(203, 166, 247),         // mauve
+        
+        // Status colors
+        success: Rgb(166, 227, 161),           // green
+        warning: Rgb(249, 226, 175),           // yellow
+        error: Rgb(243, 139, 168),             // red
+        
+        // UI elements
+        border: Rgb(108, 112, 134),            // overlay0
+        border_focused: Rgb(203, 166, 247),    // mauve
+        
+        // Selection and highlighting
+        selection: Rgb(49, 50, 68),            // surface0
+        selection_text: Rgb(205, 214, 244),    // text
+        
+        // Progress and indicators
+        progress_bar: Rgb(137, 180, 250),      // blue
+        progress_bar_bg: Rgb(69, 71, 90),      // surface1
+        
+        // Additional UI colors
+        tab_active: Rgb(137, 180, 250),        // blue
+        tab_inactive: Rgb(108, 112, 134),      // overlay0
+        
+        // Music player specific
+        playing: Rgb(166, 227, 161),           // green
+        paused: Rgb(249, 226, 175),            // yellow
+        stopped: Rgb(108, 112, 134),           // overlay0
+        
+        // Volume and time
+        volume_bar: Rgb(148, 226, 213),        // teal
+        time_elapsed: Rgb(137, 180, 250),      // blue
+        time_remaining: Rgb(108, 112, 134),    // overlay0
+    ),
+    
+    // Key bindings (vim-like)
+    keybinds: KeyBinds(
+        global: {
+            "q": Quit,
+            "Ctrl+c": Quit,
+            ":": Command,
+            "/": Search,
+            "n": SearchNext,
+            "N": SearchPrevious,
+            "Tab": NextTab,
+            "Shift+Tab": PreviousTab,
+            "1": SwitchToTab(0),
+            "2": SwitchToTab(1),
+            "3": SwitchToTab(2),
+            "4": SwitchToTab(3),
+            "5": SwitchToTab(4),
+        },
+        
+        navigation: {
+            "h": Left,
+            "j": Down,
+            "k": Up,
+            "l": Right,
+            "g": Home,
+            "G": End,
+            "Ctrl+u": PageUp,
+            "Ctrl+d": PageDown,
+        },
+        
+        playback: {
+            "Space": TogglePlayback,
+            "p": TogglePlayback,
+            ">": Next,
+            "<": Previous,
+            "+": VolumeUp,
+            "-": VolumeDown,
+            "m": ToggleMute,
+            "r": ToggleRepeat,
+            "s": ToggleShuffle,
+            "c": ToggleConsume,
+        },
+        
+        queue: {
+            "Enter": PlaySelected,
+            "a": AddToQueue,
+            "d": RemoveFromQueue,
+            "D": ClearQueue,
+            "x": DeleteSelected,
+        },
+    ),
+    
+    // UI configuration
+    ui: UiConfig(
+        show_borders: true,
+        show_tabs: true,
+        show_volume: true,
+        show_repeat_mode: true,
+        show_random_mode: true,
+        show_consume_mode: true,
+        
+        // Progress bar configuration
+        progress_bar_style: "blocks",
+        volume_bar_style: "blocks",
+        
+        // Tab configuration
+        tabs: [
+            "Queue",
+            "Library",
+            "Playlists",
+            "Search",
+            "Logs",
+        ],
+    ),
+    
+    // MPD connection settings
+    mpd: MpdConfig(
+        address: "localhost:6600",
+        timeout: 5000,
+        reconnect_interval: 1000,
+    ),
+)

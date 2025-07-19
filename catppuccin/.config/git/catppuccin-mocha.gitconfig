@@ -1,0 +1,49 @@
+# Catppuccin Mocha theme for Git
+# Based on Catppuccin Mocha color palette
+
+[color]
+    ui = auto
+    branch = auto
+    diff = auto
+    status = auto
+    showbranch = auto
+
+[color "branch"]
+    current = "#89b4fa bold"     # blue
+    local = "#cdd6f4"           # text
+    remote = "#94e2d5"          # teal
+    upstream = "#f9e2af"        # yellow
+
+[color "diff"]
+    meta = "#6c7086"            # overlay0
+    frag = "#cba6f7 bold"       # mauve
+    old = "#f38ba8"             # red
+    new = "#a6e3a1"             # green
+    commit = "#f9e2af bold"     # yellow
+    whitespace = "#f38ba8 reverse" # red reverse
+
+[color "status"]
+    added = "#a6e3a1"           # green
+    changed = "#f9e2af"         # yellow
+    untracked = "#f38ba8"       # red
+    branch = "#89b4fa bold"     # blue
+    nobranch = "#f38ba8 bold"   # red
+    unmerged = "#fab387 bold"   # peach
+
+[color "grep"]
+    filename = "#89b4fa"        # blue
+    linenumber = "#6c7086"      # overlay0
+    match = "#f38ba8 bold"      # red
+    selected = "#cdd6f4"        # text
+    separator = "#6c7086"       # overlay0
+
+[color "log"]
+    date = "#6c7086"            # overlay0
+    author = "#94e2d5"          # teal
+    committer = "#94e2d5"       # teal
+
+[color "interactive"]
+    prompt = "#cba6f7 bold"     # mauve
+    header = "#89b4fa bold"     # blue
+    help = "#6c7086"            # overlay0
+    error = "#f38ba8 bold"      # red

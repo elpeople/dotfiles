@@ -1,0 +1,141 @@
+# Catppuccin Mocha theme for lazygit
+gui:
+  # Catppuccin Mocha color theme
+  theme:
+    lightTheme: false
+    activeBorderColor:
+      - '#cba6f7' # mauve
+      - bold
+    inactiveBorderColor:
+      - '#6c7086' # overlay0
+    optionsTextColor:
+      - '#89b4fa' # blue
+    selectedLineBgColor:
+      - '#313244' # surface0
+    selectedRangeBgColor:
+      - '#45475a' # surface1
+    cherryPickedCommitBgColor:
+      - '#94e2d5' # teal
+    cherryPickedCommitFgColor:
+      - '#1e1e2e' # base
+    unstagedChangesColor:
+      - '#f38ba8' # red
+    defaultFgColor:
+      - '#cdd6f4' # text
+  scrollHeight: 2
+  scrollPastBottom: true
+  sidePanelWidth: 0.3333
+  expandFocusedSidePanel: false
+  mainPanelSplitMode: 'flexible'
+  language: 'auto'
+  timeFormat: '02 Jan 06 15:04 MST'
+  theme:
+    lightTheme: false
+  commitLength:
+    show: true
+  mouseEvents: true
+  skipDiscardChangeWarning: false
+  skipStashWarning: false
+  showFileTree: true
+  showListFooter: true
+  showRandomTip: true
+  showBranchCommitHash: false
+  showBottomLine: true
+  showCommandLog: true
+  commandLogSize: 8
+  splitDiff: 'auto'
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+  commit:
+    signOff: false
+  merging:
+    manualCommit: false
+    args: ''
+  log:
+    order: 'topo-order'
+    showGraph: 'when-maximised'
+  skipHookPrefix: WIP
+  autoFetch: true
+  autoRefresh: true
+  branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --'
+  allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium'
+  overrideGpg: false
+  disableForcePushing: false
+  parseEmoji: false
+
+refresher:
+  refreshInterval: 10
+  fetchInterval: 60
+
+update:
+  method: prompt
+  days: 14
+
+confirmOnQuit: false
+quitOnTopLevelReturn: false
+
+keybinding:
+  universal:
+    quit: 'q'
+    quit-alt1: '<c-c>'
+    return: '<esc>'
+    quitWithoutChangingDirectory: 'Q'
+    togglePanel: '<tab>'
+    prevItem: '<up>'
+    nextItem: '<down>'
+    prevItem-alt: 'k'
+    nextItem-alt: 'j'
+    prevPage: ','
+    nextPage: '.'
+    gotoTop: '<'
+    gotoBottom: '>'
+    scrollLeft: 'H'
+    scrollRight: 'L'
+    prevBlock: '<left>'
+    nextBlock: '<right>'
+    prevBlock-alt: 'h'
+    nextBlock-alt: 'l'
+    jumpToBlock: ['1', '2', '3', '4', '5']
+    nextMatch: 'n'
+    prevMatch: 'N'
+    optionMenu: 'x'
+    optionMenu-alt1: '?'
+    select: '<space>'
+    goInto: '<enter>'
+    openRecentRepos: '<c-r>'
+    confirm: '<enter>'
+    remove: 'd'
+    new: 'n'
+    edit: 'e'
+    openFile: 'o'
+    scrollUpMain: '<pgup>'
+    scrollDownMain: '<pgdown>'
+    scrollUpMain-alt1: 'K'
+    scrollDownMain-alt1: 'J'
+    scrollUpMain-alt2: '<c-u>'
+    scrollDownMain-alt2: '<c-d>'
+    executeCustomCommand: ':'
+    createRebaseOptionsMenu: 'm'
+    pushFiles: 'P'
+    pullFiles: 'p'
+    refresh: 'R'
+    createPatchOptionsMenu: '<c-p>'
+    nextTab: ']'
+    prevTab: '['
+    nextScreenMode: '+'
+    prevScreenMode: '_'
+    undo: 'z'
+    redo: '<c-z>'
+    filteringMenu: '<c-s>'
+    diffingMenu: 'W'
+    diffingMenu-alt: '<c-e>'
+    copyToClipboard: '<c-o>'
+    submitEditorText: '<enter>'
+    appendNewline: '<a-enter>'
+    extrasMenu: '@'
+    toggleWhitespaceInDiffView: '<c-w>'
+    increaseContextInDiffView: '}'
+    decreaseContextInDiffView: '{'

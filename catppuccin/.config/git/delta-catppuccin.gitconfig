@@ -1,0 +1,38 @@
+# Delta (git diff) with Catppuccin Mocha theme
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    light = false
+    side-by-side = true
+    line-numbers = true
+    syntax-theme = "Catppuccin Mocha"
+    
+    # Catppuccin Mocha colors for delta
+    minus-style = "#f38ba8"
+    minus-emph-style = "#f38ba8 bold"
+    plus-style = "#a6e3a1"
+    plus-emph-style = "#a6e3a1 bold"
+    
+    file-style = "#89b4fa bold"
+    file-decoration-style = "#89b4fa ul"
+    hunk-header-style = "#cba6f7 bold"
+    hunk-header-decoration-style = "#cba6f7 box"
+    
+    line-numbers-left-style = "#6c7086"
+    line-numbers-right-style = "#6c7086"
+    line-numbers-minus-style = "#f38ba8"
+    line-numbers-plus-style = "#a6e3a1"
+    
+    blame-palette = "#1e1e2e #313244 #45475a #585b70"
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default

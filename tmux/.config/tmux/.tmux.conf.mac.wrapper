@@ -80,7 +80,7 @@ bind C-p display-popup -E "ipython"
 bind C-f display-popup \
   -w 80% \
   -h 80% \
-  -E '$HOME/.local/bin/rmpc-tmux'
+  -E 'TERM=xterm-256color $HOME/.cargo/bin/rmpc'
 bind C-r display-popup \
   -d "#{pane_current_path}" \
   -w 90% \
