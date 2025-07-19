@@ -275,3 +275,6 @@ ranger_cd() {
 if (( $+commands[ranger] )) && [[ -o interactive ]]; then
  bindkey -s '^O' 'ranger_cd\n'
 fi
+
+# zoxide
+eval "$(zoxide init zsh)"

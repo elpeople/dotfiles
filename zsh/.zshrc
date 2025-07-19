@@ -50,8 +50,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -61,11 +60,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Load Catppuccin syntax highlighting
 if [[ -f ~/.config/zsh/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh ]]; then
     source ~/.config/zsh/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
-fi
-
-# Load Catppuccin Powerlevel10k colors
-if [[ -f ~/.config/zsh/p10k-catppuccin.zsh ]]; then
-    source ~/.config/zsh/p10k-catppuccin.zsh
 fi
 
 # Catppuccin LS colors
@@ -93,4 +87,12 @@ fi
 # ripgrep
 if [[ -f ~/.config/ripgrep/catppuccin-mocha.sh ]]; then
     source ~/.config/ripgrep/catppuccin-mocha.sh
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Load Catppuccin Powerlevel10k colors
+if [[ -f ~/.config/zsh/p10k-catppuccin.zsh ]]; then
+    source ~/.config/zsh/p10k-catppuccin.zsh
 fi

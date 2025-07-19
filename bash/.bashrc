@@ -127,9 +127,13 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 # eza (exa successor)
 if [[ -f ~/.config/eza/catppuccin-mocha.sh ]]; then
     source ~/.config/eza/catppuccin-mocha.sh
+
 fi
 
 # ripgrep
 if [[ -f ~/.config/ripgrep/catppuccin-mocha.sh ]]; then
     source ~/.config/ripgrep/catppuccin-mocha.sh
 fi
+
+# zoxide
+eval "$(zoxide init bash)"
