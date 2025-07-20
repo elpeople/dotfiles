@@ -1,0 +1,9 @@
+# Windows (Git Bash/MSYS2) 固有tmux設定
+# ============================================================================
+
+# Windows用シェル設定
+set-option -g default-shell /usr/bin/bash
+
+# Windows用クリップボード連携
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "clip"
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "clip"

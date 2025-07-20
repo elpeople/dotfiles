@@ -1,0 +1,19 @@
+# macOS固有tmux設定
+# ============================================================================
+
+# macOS用シェル設定
+set-option -g default-shell /bin/zsh
+
+# macOS用クリップボード連携
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+
+# macOS用ポップアップ設定
+bind C-f display-popup -w 80% -h 80% -E '$HOME/.local/bin/rmpc-tmux'
+
+# macOS用メニュー設定
+bind d display-menu -T "#[align=centre]Dotfiles" -x C -y C \
+  ".zshrc"            z  "display-popup -E 'nvim ~/.zshrc'" \
+  ".tmux.conf"        t  "display-popup -E 'nvim ~/.tmux.conf'" \
+  ".sketchybarrc"     s  "display-popup -d "~/.config/sketchybar" -E 'nvim ~/.config/sketchybar/sketchybarrc'" \
+  "Exit"              q  ""

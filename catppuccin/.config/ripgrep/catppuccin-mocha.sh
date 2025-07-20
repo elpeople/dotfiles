@@ -25,6 +25,7 @@ cat > ~/.config/ripgrep/config << 'RGEOF'
 RGEOF
 
 # Aliases for ripgrep
+# Aliases for ripgrep
 alias grep='rg'
 alias rgi='rg -i'
 alias rgf='rg --files'

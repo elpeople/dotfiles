@@ -6,57 +6,33 @@ case $- in
       *) return;;
 esac
 
-echo "DEBUG: ~/.bashrc is being executed."
+# 共通設定
+# ============================================================================
 
 # Load common aliases
 if [ -f "$HOME/dotfiles/shell/aliases" ]; then
     source "$HOME/dotfiles/shell/aliases"
 fi
 
-# Load OS-specific bashrc
-if [ -n "$WSL_DISTRO_NAME" ]; then
-    echo "DEBUG: Detected WSL environment."
-    # WSL (Windows Subsystem for Linux)
-    if [ -f "$HOME/dotfiles/bash/.bashrc.wsl" ]; then
-        echo "DEBUG: Sourcing $HOME/dotfiles/bash/.bashrc.wsl"
-        . "$HOME/dotfiles/bash/.bashrc.wsl"
-    else
-        echo "DEBUG: $HOME/dotfiles/bash/.bashrc.wsl not found."
-    fi
-elif [[ "$(uname -s)" == "Linux" ]]; then
-    echo "DEBUG: Detected Generic Linux environment."
-    # Generic Linux (not WSL)
-    if [ -f "$HOME/dotfiles/bash/.bashrc.lin" ]; then
-        echo "DEBUG: Sourcing $HOME/dotfiles/bash/.bashrc.lin"
-        . "$HOME/dotfiles/bash/.bashrc.lin"
-    else
-        echo "DEBUG: $HOME/dotfiles/bash/.bashrc.lin not found."
-    fi
-elif [[ "$(uname -s)" == "Darwin" ]]; then
-    echo "DEBUG: Detected macOS environment."
-    # macOS
-    if [ -f "$HOME/dotfiles/bash/.bashrc.mac" ]; then
-        echo "DEBUG: Sourcing $HOME/dotfiles/bash/.bashrc.mac"
-        . "$HOME/dotfiles/bash/.bashrc.mac"
-    else
-        echo "DEBUG: $HOME/dotfiles/bash/.bashrc.mac not found."
-    fi
-elif [[ "$(uname -s)" == "CYGWIN_NT"* || "$(uname -s)" == "MINGW"* ]]; then
-    echo "DEBUG: Detected Windows (Cygwin/Git Bash) environment."
-    # Windows (Cygwin or Git Bash)
-    if [ -f "$HOME/dotfiles/bash/.bashrc.win" ]; then
-        echo "DEBUG: Sourcing $HOME/dotfiles/bash/.bashrc.win"
-        . "$HOME/dotfiles/bash/.bashrc.win"
-    else
-        echo "DEBUG: $HOME/dotfiles/bash/.bashrc.win not found."
-    fi
-else
-    echo "DEBUG: Unknown OS detected: $(uname -s)"
-fi
+# 基本設定
+HISTCONTROL=ignoreboth
+shopt -s histappend
+HISTSIZE=100000
+HISTFILESIZE=200000
+shopt -s checkwinsize
 
-alias lg='lazygit'
+# 基本環境変数
+export EDITOR=vim
+export LANG=ja_JP.UTF-8
+export PATH="$HOME/.fzf/bin:$HOME/.local/bin:$PATH"
 
-# ranger_cd function for bash
+# XDG Base Directory
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_STATE_HOME="${HOME}/.local/state"
+
+# ranger_cd function
 ranger_cd() {
   temp_file="$(mktemp -t ranger_cd.XXXXXXXXXX)"
   ranger --choosedir="$temp_file" -- "${@:-$PWD}"
@@ -67,73 +43,66 @@ ranger_cd() {
   rm -f -- "$temp_file"
 }
 
-# Bind Ctrl-O to ranger_cd in bash
+# Bind Ctrl-O to ranger_cd
 if command -v ranger &> /dev/null; then
-  bind -x '"\C-o": ranger_cd'
+  # Bash interactiveモードでのみバインド
+  if [[ $- == *i* ]]; then
+    # デフォルトのCtrl+Oを上書きしてrangerにバインド
+    bind '"\C-o": operate-and-get-next'  # デフォルトを保持
+    bind -x '"\C-o": ranger_cd'          # rangerに再バインド
+  fi
 fi
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-export PATH=~/.npm-global/bin:$PATH
-
-# SSH自動起動
-/usr/local/bin/start-ssh.sh
-
-# Japanese Input Method (Mozc/IBus)
-export GTK_IM_MODULE=ibus
-export QT_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-
-# ロケール設定（日本語表示対応）
-export LANG=ja_JP.UTF-8
-export LC_ALL=ja_JP.UTF-8
-
-# 日本語入力切り替え時にプロンプトをクリアする関数
-clear_prompt_japanese() {
-    # プロンプトをクリア
-    printf '\033[2K\r'
-    # 新しいプロンプトを表示
-    if [ -n "$PS1" ]; then
-        printf "$PS1"
-    fi
-}
-
-# 入力メソッド切り替えのエイリアス
-alias ime-ja='ibus engine mozc-jp && clear_prompt_japanese'
-alias ime-en='ibus engine xkb:us::eng && clear_prompt_japanese'
-alias ime-toggle='ibus engine $([ "$(ibus engine)" = "mozc-jp" ] && echo "xkb:us::eng" || echo "mozc-jp") && clear_prompt_japanese'
-
-# Ctrl+Spaceで入力メソッド切り替え（ターミナル用）
-bind '"\C-@": "ime-toggle\n"'
-
-# Catppuccin Mocha theme
+# Catppuccin theme
 if [[ -f ~/.config/bash/catppuccin-mocha.sh ]]; then
     source ~/.config/bash/catppuccin-mocha.sh
 fi
 
-# FZF Catppuccin theme
 if [[ -f ~/.config/fzf/catppuccin-mocha.sh ]]; then
     source ~/.config/fzf/catppuccin-mocha.sh
 fi
 
-# bat as cat replacement with catppuccin
-alias cat='bat'
-alias less='bat'
-
-# fzf integration with bat preview
-export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
-
-# Additional CLI tools with Catppuccin
-# eza (exa successor)
 if [[ -f ~/.config/eza/catppuccin-mocha.sh ]]; then
     source ~/.config/eza/catppuccin-mocha.sh
-
 fi
 
-# ripgrep
 if [[ -f ~/.config/ripgrep/catppuccin-mocha.sh ]]; then
     source ~/.config/ripgrep/catppuccin-mocha.sh
 fi
 
+# fzf integration
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+# fzfの表示問題を解決するためのターミナル設定
+export TERM=xterm-256color
+export COLUMNS=$(tput cols)
+export LINES=$(tput lines)
+
 # zoxide
 eval "$(zoxide init bash)"
+
+# OS固有設定
+# ============================================================================
+
+# OS別設定ファイルを読み込み
+if grep -qEi "(Microsoft|WSL)" /proc/version &>/dev/null; then
+    [ -f "$HOME/dotfiles/bash/bashrc.wsl" ] && source "$HOME/dotfiles/bash/bashrc.wsl"
+elif [[ "$(uname -s)" == "Linux" ]]; then
+    [ -f "$HOME/dotfiles/bash/bashrc.lin" ] && source "$HOME/dotfiles/bash/bashrc.lin"
+elif [[ "$(uname -s)" == "Darwin" ]]; then
+    [ -f "$HOME/dotfiles/bash/bashrc.mac" ] && source "$HOME/dotfiles/bash/bashrc.mac"
+elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]]; then
+    [ -f "$HOME/dotfiles/bash/bashrc.win" ] && source "$HOME/dotfiles/bash/bashrc.win"
+fi
+
+# 共通の最終設定
+# ============================================================================
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

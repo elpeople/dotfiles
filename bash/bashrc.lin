@@ -1,0 +1,10 @@
+# Linux固有bash設定
+# ============================================================================
+
+# Linux用日本語入力設定
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+
+# Linux用プロンプト
+PS1='\u@\h:\w\$ '

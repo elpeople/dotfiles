@@ -1,0 +1,13 @@
+# WSL固有tmux設定
+# ============================================================================
+
+# WSL用シェル設定
+set-option -g default-shell /usr/bin/zsh
+
+# WSL用クリップボード連携
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel '/mnt/c/Windows/System32/clip.exe'
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel '/mnt/c/Windows/System32/clip.exe'
+
+# WSL用ポップアップ設定
+bind C-f display-popup -w 80% -h 80% -E 'rmpc'
+bind C-g display-popup -E "bash -i ~/.tmux/scripts/chat-popup.sh"

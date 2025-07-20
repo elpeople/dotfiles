@@ -1,0 +1,25 @@
+# WSL固有bash設定
+# ============================================================================
+
+# WSL用環境変数
+export LC_ALL=ja_JP.UTF-8
+export PATH="$PATH:/usr/local/games:/usr/games:/home/linuxbrew/.linuxbrew/bin"
+export PATH=~/.npm-global/bin:$PATH
+
+# WSL用Homebrew設定
+if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# WSL用Catppuccinプロンプト
+BASE="#1e1e2e"  # 背景色
+TEXT="#cdd6f4"  # 基本テキスト色
+PINK="#f5c2e7"  # 強調色1
+MAUVE="#cba6f7" # 強調色2
+
+# TrueColor対応プロンプト
+if [[ "$TERM" =~ "256color" ]]; then
+    PS1='\[\e[38;2;205;214;244m\]\u@\h \[\e[38;2;203;166;247m\]\w\[\e[0m\] \$ '
+else
+    PS1='\u@\h:\w\$ '  # フォールバック用
+fi

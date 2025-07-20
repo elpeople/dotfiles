@@ -21,6 +21,11 @@ alias mpc='mpc'
 alias rmpc='rmpc'
 alias gcl="git fetch --prune && git branch --merged | grep -vE '^\*|master$|main$|develop$' | xargs git branch -d"
 
+# tmux wrapper to avoid library conflicts with rovodev plugin
+tmux() {
+    $HOME/local/bin/tmux-wrapper "$@"
+}
+
 # Function to translate English to Japanese
 transej() {
     echo -n "Enter English text: "
@@ -54,20 +59,41 @@ case "$(uname -s)" in
 
         if grep -q -i "microsoft" /proc/version 2>/dev/null; then
             # For WSL (Windows Subsystem for Linux)
-            alias tmux='env -i PATH=/usr/bin:/bin:/usr/local/bin SHELL=/usr/bin/zsh tmux'
+            alias pbcopy='/mnt/c/Windows/System32/clip.exe'
+            alias pbpaste='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -command "Get-Clipboard"'
+            alias explorer='/mnt/c/Windows/explorer.exe'
+            alias notepad='/mnt/c/Windows/System32/notepad.exe'
+            alias open='/mnt/c/Windows/explorer.exe'
             alias comfyui='cd ~/comfyui/ComfyUI && python main.py'
             alias comfyui-gpu='cd ~/comfyui/ComfyUI && python main.py --highvram'
             alias comfyui-fast='cd ~/comfyui/ComfyUI && python main.py --highvram --fast'
             alias openwebui='~/.local/bin/owuolm/bin/open-webui serve'
             alias webui-all='openwebui & sleep 3 && comfyui-gpu'
-        else
-            # For standard Linux distributions
-            alias tmux='env -i PATH=/usr/bin:/bin:/usr/local/bin SHELL=/usr/bin/zsh tmux'
+            # 日本語フォント関連
+            alias install-fonts-jp='sudo apt update && sudo apt install -y fonts-noto-cjk fonts-noto-cjk-extra fonts-noto-color-emoji'
+            alias fc-cache-refresh='fc-cache -fv'
+            # 日本語入力関連
+            alias fcitx5-start='env LD_LIBRARY_PATH= fcitx5 -d'
+            alias fcitx-start='env LD_LIBRARY_PATH= fcitx -d'
+            alias ibus-start='env LD_LIBRARY_PATH= ibus-daemon -d'
+            alias install-fcitx5='sudo apt update && sudo apt install -y fcitx5 fcitx5-mozc fcitx5-config-qt'
+            alias install-fcitx='sudo apt update && sudo apt install -y fcitx fcitx-mozc fcitx-config-gtk'
+            alias install-ibus='sudo apt update && sudo apt install -y ibus ibus-mozc'
+            # GUI関連
+            alias install-gui-apps='sudo apt update && sudo apt install -y mousepad gedit firefox'
+            alias setup-display='export DISPLAY=:0.0'
+            alias check-x11='echo "DISPLAY: $DISPLAY" && xdpyinfo 2>/dev/null | head -5 || echo "X11サーバーが起動していません"'
         fi
         ;;
     Darwin*)
         # For macOS
-        
         alias iclouddrive="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
+        ;;
+    MINGW*|MSYS*|CYGWIN*)
+        # Windows (Git Bash/MSYS2)
+        alias explorer='explorer.exe'
+        alias clip='clip.exe'
+        alias open='explorer.exe'
+        alias notepad='notepad.exe'
         ;;
 esac

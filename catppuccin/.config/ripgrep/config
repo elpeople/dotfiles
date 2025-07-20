@@ -1,17 +1,16 @@
-       STDIN
-   1   # Catppuccin Mocha colors for ripgrep
-   2   --colors=match:fg:243,139,168
-   3   --colors=match:bg:49,50,68
-   4   --colors=match:style:bold
-   5   --colors=path:fg:137,180,250
-   6   --colors=path:style:bold
-   7   --colors=line:fg:249,226,175
-   8   --colors=column:fg:108,112,134
-   9   
-  10   # Additional ripgrep settings
-  11   --smart-case
-  12   --follow
-  13   --hidden
-  14   --glob=!.git/*
-  15   --glob=!node_modules/*
-  16   --glob=!.cache/*
+# Catppuccin Mocha colors for ripgrep
+--colors=match:fg:243,139,168
+--colors=match:bg:49,50,68
+--colors=match:style:bold
+--colors=path:fg:137,180,250
+--colors=path:style:bold
+--colors=line:fg:249,226,175
+--colors=column:fg:108,112,134
+
+# Additional ripgrep settings
+--smart-case
+--follow
+--hidden
+--glob=!.git/*
+--glob=!node_modules/*
+--glob=!.cache/*

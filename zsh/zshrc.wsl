@@ -1,0 +1,78 @@
+# WSL固有zsh設定
+# ============================================================================
+
+# WSL用ロケール設定（WSLで利用可能な形式）
+export LANG=ja_JP.utf8
+export LC_ALL=ja_JP.utf8
+export LC_CTYPE=ja_JP.utf8
+export PATH="$HOME/.npm-global/bin:$PATH"
+
+# WSL用ターミナル日本語表示最適化
+export TERM=${TERM:-xterm-256color}
+export COLORTERM=truecolor
+
+# WSL用日本語文字幅設定
+export NCURSES_NO_UTF8_ACS=1
+
+# WSL用zsh日本語表示設定
+setopt COMBINING_CHARS
+setopt PRINT_EIGHT_BIT
+
+# WSL用DISPLAY設定（GUI使用時）
+if [[ -n "$DISPLAY" ]]; then
+  export DISPLAY
+fi
+
+# WSL用XDG設定
+export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/tmp/runtime-$USER}
+if [[ ! -d "$XDG_RUNTIME_DIR" ]]; then
+  mkdir -p "$XDG_RUNTIME_DIR"
+  chmod 700 "$XDG_RUNTIME_DIR"
+fi
+
+# WSL用日本語入力設定
+# fcitx5が利用可能な場合
+if command -v fcitx5 >/dev/null 2>&1; then
+  export GTK_IM_MODULE=fcitx
+  export QT_IM_MODULE=fcitx
+  export XMODIFIERS=@im=fcitx
+  export INPUT_METHOD=fcitx
+# fcitxが利用可能な場合
+elif command -v fcitx >/dev/null 2>&1; then
+  export GTK_IM_MODULE=fcitx
+  export QT_IM_MODULE=fcitx
+  export XMODIFIERS=@im=fcitx
+  export INPUT_METHOD=fcitx
+# ibus が利用可能な場合
+elif command -v ibus >/dev/null 2>&1; then
+  export GTK_IM_MODULE=ibus
+  export QT_IM_MODULE=ibus
+  export XMODIFIERS=@im=ibus
+  export INPUT_METHOD=ibus
+fi
+
+# WSL用Ranger keybind (Ctrl+O)
+# rangerがインストールされている場合のみバインド
+if command -v ranger &>/dev/null; then
+  bindkey -s '^o' 'ranger^M'
+fi
+
+# WSL用Windows連携設定
+if [[ -f "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" ]]; then
+  export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+fi
+
+# WSL用日本語フォント設定
+export FONTCONFIG_PATH=/etc/fonts
+export FONTCONFIG_FILE=/etc/fonts/fonts.conf
+
+# WSL用GUI関連設定
+export GDK_SCALE=1
+export QT_SCALE_FACTOR=1
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
+
+# WSL用追加のGUI設定
+export QT_QPA_PLATFORM=xcb
+export GDK_BACKEND=x11
+export LIBGL_ALWAYS_INDIRECT=1
+export NO_AT_BRIDGE=1

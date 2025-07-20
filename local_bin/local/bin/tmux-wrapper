@@ -1,0 +1,15 @@
+#!/bin/bash
+# tmux wrapper to avoid library conflicts with rovodev plugin
+
+# Save original LD_LIBRARY_PATH
+ORIGINAL_LD_LIBRARY_PATH="$LD_LIBRARY_PATH"
+
+# Remove rovodev lib path from LD_LIBRARY_PATH
+if [[ -n "$LD_LIBRARY_PATH" ]]; then
+    # Remove the rovodev path specifically
+    NEW_LD_LIBRARY_PATH=$(echo "$LD_LIBRARY_PATH" | sed 's|/home/elpeople/.local/share/acli/plugin/rovodev/lib:||g' | sed 's|:/home/elpeople/.local/share/acli/plugin/rovodev/lib||g' | sed 's|^/home/elpeople/.local/share/acli/plugin/rovodev/lib$||g')
+    export LD_LIBRARY_PATH="$NEW_LD_LIBRARY_PATH"
+fi
+
+# Execute tmux with all arguments
+exec /usr/bin/tmux "$@"
