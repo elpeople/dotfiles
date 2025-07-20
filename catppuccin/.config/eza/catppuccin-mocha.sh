@@ -29,7 +29,7 @@ cc=38;2;249;226;175:\
 "
 
 # Aliases for eza with catppuccin
-alias ls='eza --color=always --group-directories-first'
+alias ls='eza --color=always --group-directories-first --oneline'
 alias ll='eza -la --color=always --group-directories-first'
 alias la='eza -a --color=always --group-directories-first'
 alias lt='eza -T --color=always'

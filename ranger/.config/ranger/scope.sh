@@ -48,9 +48,15 @@ OPENSCAD_IMGSIZE=${RNGR_OPENSCAD_IMGSIZE:-1000,1000}
 OPENSCAD_COLORSCHEME=${RNGR_OPENSCAD_COLORSCHEME:-Tomorrow Night}
 
 handle_pdf() {
-    # Previews PDF using pdftotext
-    pdftotext -layout "$1" - 2>/dev/null | head -n 100
-    exit 0
+    # Previews PDF using pdftotext and less for vim-like navigation
+    if command -v pdftotext >/dev/null; then
+        pdftotext -layout "$1" - 2>/dev/null | less -R
+        exit 0
+    else
+        # Fallback if pdftotext is not available (e.g., display plain text or a message)
+        echo "pdftotext is not installed. Cannot preview PDF with vim-like navigation."
+        exit 1 # Indicate no preview
+    fi
 }
 
 handle_extension() {
@@ -161,7 +167,7 @@ handle_image() {
         ## Video
          video/*)
              # Thumbnail
-             ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
+             ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 256 && exit 6
              exit 1;;
 
         ## PDF
