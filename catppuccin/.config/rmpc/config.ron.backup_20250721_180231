@@ -4,7 +4,53 @@
 (
     address: "127.0.0.1:6600",
     password: None,
-    theme: None,
+    theme: Some((
+        // Catppuccin Mocha color palette
+        bg: Rgb(30, 30, 46),                    // base
+        fg: Rgb(205, 214, 244),                 // text
+        
+        // Primary colors
+        primary: Rgb(137, 180, 250),            // blue
+        secondary: Rgb(203, 166, 247),          // mauve
+        
+        // Status colors
+        success: Rgb(166, 227, 161),            // green
+        warning: Rgb(249, 226, 175),            // yellow
+        error: Rgb(243, 139, 168),              // red
+        info: Rgb(148, 226, 213),               // teal
+        
+        // Border colors
+        border_primary: Rgb(108, 112, 134),     // overlay0
+        border_secondary: Rgb(69, 71, 90),      // surface1
+        border_focused: Rgb(203, 166, 247),     // mauve
+        
+        // Selection colors
+        selection_bg: Rgb(49, 50, 68),          // surface0
+        selection_fg: Rgb(205, 214, 244),       // text
+        
+        // Progress bars
+        progress_bg: Rgb(69, 71, 90),           // surface1
+        progress_fg: Rgb(137, 180, 250),        // blue
+        
+        // Volume bar
+        volume_bg: Rgb(69, 71, 90),             // surface1
+        volume_fg: Rgb(148, 226, 213),          // teal
+        
+        // Tabs
+        tab_active_bg: Rgb(49, 50, 68),         // surface0
+        tab_active_fg: Rgb(137, 180, 250),      // blue
+        tab_inactive_bg: Rgb(30, 30, 46),       // base
+        tab_inactive_fg: Rgb(108, 112, 134),    // overlay0
+        
+        // Player status
+        playing: Rgb(166, 227, 161),            // green
+        paused: Rgb(249, 226, 175),             // yellow
+        stopped: Rgb(108, 112, 134),            // overlay0
+        
+        // Highlight colors
+        highlight: Rgb(245, 194, 231),          // pink
+        highlight_bg: Rgb(69, 71, 90),          // surface1
+    )),
     cache_dir: None,
     on_song_change: None,
     volume_step: 5,
@@ -154,4 +200,3 @@
         ),
     ],
 )
-

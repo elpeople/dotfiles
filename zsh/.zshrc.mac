@@ -15,7 +15,8 @@ export LC_ALL=en_US.UTF-8
 export EDITOR=vim
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
-
+export OLLAMA_HOST="http://100.76.3.52:11434"
+#export PATH="/Volumes/CT1000P2SSDB8/OllamaModels"
 fpath=(path/to/zsh-completions/src $fpath)
 
 ## zsh-completions

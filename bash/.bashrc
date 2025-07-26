@@ -136,4 +136,10 @@ if [[ -f ~/.config/ripgrep/catppuccin-mocha.sh ]]; then
 fi
 
 # zoxide
-eval "$(zoxide init bash)"
+eval "$(zoxide init bash)"alias pd='podcast-download.sh'
+alias dawtalk='podcast-download.sh https://anchor.fm/daw-talk'
+alias rebuild='podcast-download.sh https://rebuild.fm/'
+
+# castero 起動エイリアス
+alias castero='source ~/venv/castero/bin/activate && castero'
+alias castero='~/.local/bin/castero-wrapper.sh'

@@ -1,6 +1,13 @@
-http://feeds.feedburner.com/hatena/b/hotentry "ネットの話題"
-http://portal.nifty.com/rss/headline.rdf "ポータルサイト"
+# 動作確認済みフィード
+https://feeds.rebuild.fm/rebuildfm "rebuild.fm" "podcast"
+https://anchor.fm/s/76fdab1c/podcast/rss "DAW Talk" "podcast"
+
+# IT・ガジェット（動作確認済み）
 https://www.gizmodo.jp/index.xml "IT・ガジェット"
-http://japanese.engadget.com/rss.xml "IT・ガジェット"
 http://gigazine.net/news/rss_2.0/ "IT・ガジェット"
-http://pc.watch.impress.co.jp/sublink/pc.rdf "IT・ガジェット"
+
+# 代替フィード
+https://b.hatena.ne.jp/hotentry/it.rss "はてなブックマーク IT"
+https://zenn.dev/feed "Zenn" "tech"
+https://qiita.com/popular-items/feed "Qiita人気記事" "tech"
+https://www.techno-edge.net/rss20/index.rdf

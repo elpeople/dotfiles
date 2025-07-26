@@ -1,6 +1,6 @@
 # Stow configuration file
 # Target directory (where symlinks will be created)
---target=..
+--target=~
 
 # Ignore patterns
 --ignore=\.git

@@ -97,3 +97,7 @@ repo = 'mattn/sonictemplate-vim'
 repo = 'reireias/vim-cheatsheet'
 [[plugins]]
 repo = 'simeji/winresizer' 
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+[[plugins]]
+repo = 'previm/previm'

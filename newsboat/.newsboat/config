@@ -1,26 +1,23 @@
-# general settings
+# 基本設定
 auto-reload yes
 max-items 50
 
-# externel browser
-browser "/usr/local/bin/w3m %u"
-macro m set browser "/usr/local/bin/mpv %u"; open-in-browser ; set browser "/usr/local/bin/w3m %u"
-macro l set browser "/usr/local/bin/firefox %u"; open-in-browser ; set browser "/usr/local/bin/w3m %u"
+# ブラウザ設定
+browser "/opt/homebrew/bin/w3m %u"
 
-# unbind keys
+# キーバインド - vim style
 unbind-key ENTER
 unbind-key j
 unbind-key k
 unbind-key J
 unbind-key K
 
-# bind keys - vim style
 bind-key j down
 bind-key k up
 bind-key l open
 bind-key h quit
 
-# solarized
+# 色設定
 color background         default   default
 color listnormal         default   default
 color listnormal_unread  default   default
@@ -29,8 +26,16 @@ color listfocus_unread   black     cyan
 color info               default   black
 color article            default   default
 
-# highlights
+# ハイライト
 highlight article "^(Title):.*$" blue default
 highlight article "https?://[^ ]+" red default
-highlight article "\\[image\\ [0-9]+\\]" green default
+highlight article "\[image\\ [0-9]+\]" green default
 
+# シンプルなマクロ（動作テスト用）
+macro m set browser "/usr/local/bin/mpv %u"; open-in-browser-noninteractively ; set browser "/opt/homebrew/bin/w3m %u"
+
+# ポッドキャストダウンロード用マクロ
+macro p set browser "~/.local/bin/newsboat-mp3-extractor.sh %u"; open-in-browser-noninteractively ; set browser "/opt/homebrew/bin/w3m %u"
+
+# 自動クリーンアップ設定
+cleanup-on-quit yes

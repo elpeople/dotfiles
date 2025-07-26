@@ -52,7 +52,6 @@ if dein#check_install()
 endif
 
 " Required:
-filetype plugin indent on
 syntax enable
 
 " deinコマンドの定義
@@ -256,16 +255,14 @@ nnoremap sh <C-w>h
 nnoremap ss :<C-u>sp<CR><C-w>j
 nnoremap sv :<C-u>vs<CR><C-w>l
 
-" vim-plug プラグイン管理
-call plug#begin('~/.vim/plugged')
+autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
-" Catppuccin colorscheme
-
-" その他の推奨プラグイン
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-call plug#end()
+" Previm
+let g:previm_open_cmd = ''
+nnoremap [previm] <Nop>
+nmap <Space>p [previm]
+nnoremap <silent> [previm]o :<C-u>PrevimOpen<CR>
+nnoremap <silent> [previm]r :call previm#refresh()<CR>
 
 " Catppuccin テーマ設定
 set termguicolors

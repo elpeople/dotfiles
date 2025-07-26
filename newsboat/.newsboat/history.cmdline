@@ -1,0 +1,4 @@
+set browser "~/.local/bin/newsboat-mp3-extractor.sh %u"
+open-in-browser
+open-in-browser
+set browser "~/.local/bin/newsboat-mp3-extractor.sh %u"
