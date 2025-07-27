@@ -98,8 +98,19 @@ if [[ -f ~/.config/zsh/p10k-catppuccin.zsh ]]; then
 fi
 
 # Ranger cd function
-source ~/ranger_cd_function.sh
-bindkey -s "^O" "ranger_cd\n"
+# ranger_cd() {
+#   temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
+#   ranger --choosedir="$temp_file" -- "${@:-$PWD}"
+#   if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
+#     cd -- "$chosen_dir"
+#   fi
+#   rm -f -- "$temp_file"
+# }
+#
+# # command -v を使用してrangerの存在確認
+# if command -v ranger >/dev/null 2>&1 && [[ -t 1 ]]; then
+#   bind '"\C-o":"ranger_cd\C-m"'
+# fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

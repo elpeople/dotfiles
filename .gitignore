@@ -59,3 +59,5 @@ nvim/.local/share/nvim/
 dotfiles_old/
 dotfiles_old2/
 old/
+newsboat/.newsboat/cache.db
+ranger/.config/ranger/scope.sh.gh

@@ -47,18 +47,6 @@ PYGMENTIZE_STYLE=${PYGMENTIZE_STYLE:-autumn}
 OPENSCAD_IMGSIZE=${RNGR_OPENSCAD_IMGSIZE:-1000,1000}
 OPENSCAD_COLORSCHEME=${RNGR_OPENSCAD_COLORSCHEME:-Tomorrow Night}
 
-handle_pdf() {
-    # Previews PDF using pdftotext and less for vim-like navigation
-    if command -v pdftotext >/dev/null; then
-        pdftotext -layout "$1" - 2>/dev/null | less -R
-        exit 0
-    else
-        # Fallback if pdftotext is not available (e.g., display plain text or a message)
-        echo "pdftotext is not installed. Cannot preview PDF with vim-like navigation."
-        exit 1 # Indicate no preview
-    fi
-}
-
 handle_extension() {
     case "${FILE_EXTENSION_LOWER}" in
         ## Archive
@@ -78,11 +66,12 @@ handle_extension() {
 
         ## PDF
         pdf)
-            handle_pdf "${FILE_PATH}"
-            ## Alternative preview methods (commented out):
-            # pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - | fmt -w ${PV_WIDTH} && exit 5
-            # mutool draw -F txt -i -- "${FILE_PATH}" 1-10 | fmt -w ${PV_WIDTH} && exit 5
-            # exiftool "${FILE_PATH}" && exit 5
+            ## Preview as text conversion
+            pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - | \
+              fmt -w "${PV_WIDTH}" && exit 5
+            mutool draw -F txt -i -- "${FILE_PATH}" 1-10 | \
+              fmt -w "${PV_WIDTH}" && exit 5
+            exiftool "${FILE_PATH}" && exit 5
             exit 1;;
 
         ## BitTorrent
@@ -165,10 +154,10 @@ handle_image() {
             exit 7;;
 
         ## Video
-         video/*)
-             # Thumbnail
-             ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 256 && exit 6
-             exit 1;;
+        video/*)
+            # Thumbnail
+            ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
+            exit 1;;
 
         ## PDF
         # application/pdf)
@@ -179,9 +168,6 @@ handle_image() {
         #              -jpeg -tiffcompression jpeg \
         #              -- "${FILE_PATH}" "${IMAGE_CACHE_PATH%.*}" \
         #         && exit 6 || exit 1;;
-        application/pdf)
-        mutool draw -F png -o "${IMAGE_CACHE_PATH}" "${FILE_PATH}" 1 \
-                && exit 6 || exit 1;;
 
 
         ## ePub, MOBI, FB2 (using Calibre)
@@ -305,10 +291,6 @@ handle_mime() {
 
         ## Text
         text/* | */xml)
-            ## .python_history file
-            if [[ "${FILE_PATH}" == *".python_history" ]]; then
-                exit 1
-            fi
             ## Syntax highlight
             if [[ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
                 exit 2
@@ -320,7 +302,13 @@ handle_mime() {
                 local pygmentize_format='terminal'
                 local highlight_format='ansi'
             fi
-            env COLORTERM=8bit bat --color=always --style="plain"                 -- "${FILE_PATH}" && exit 5            env HIGHLIGHT_OPTIONS="${HIGHLIGHT_OPTIONS}" highlight                 --out-format="${highlight_format}"                 --force -- "${FILE_PATH}" && exit 5            pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"                -- "${FILE_PATH}" && exit 5
+            env HIGHLIGHT_OPTIONS="${HIGHLIGHT_OPTIONS}" highlight \
+                --out-format="${highlight_format}" \
+                --force -- "${FILE_PATH}" && exit 5
+            env COLORTERM=8bit bat --color=always --style="plain" \
+                -- "${FILE_PATH}" && exit 5
+            pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"\
+                -- "${FILE_PATH}" && exit 5
             exit 2;;
 
         ## DjVu
