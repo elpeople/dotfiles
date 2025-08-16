@@ -25,8 +25,6 @@ fi
 export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 
-
-
 # Load common aliases
 if [ -f "$HOME/dotfiles/shell/aliases" ]; then
     source "$HOME/dotfiles/shell/aliases"
@@ -49,8 +47,6 @@ esac
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -127,3 +123,10 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# opencode
+export PATH=/home/elpeople/.opencode/bin:$PATH
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"

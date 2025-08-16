@@ -193,3 +193,6 @@ export PATH="$PATH:/usr/local/games:/usr/games:/home/linuxbrew/.linuxbrew/bin"
 
 # zoxide
 eval "$(zoxide init bash)"
+
+# Ollama configuration
+export OLLAMA_MODELS=/home/ollama/.ollama/models
