@@ -4,3 +4,5 @@ color link blue
 color visited_link magenta
 color form_text black
 color form_background white
+allow_external_command yes
+extbrowser /Users/elpeople/dotfiles/tmp_rovodev_w3m_copy_url.sh

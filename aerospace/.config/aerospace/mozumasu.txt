@@ -1,0 +1,89 @@
+### 全体的な設定
+
+*   `start-at-login = true`
+    *   `true`の場合、PCログイン時にAeroSpaceを自動で起動します。
+*   `after-login-command = []`
+    *   ログイン直後に実行するコマンドを指定します。現在は何も設定されていません。
+*   `after-startup-command = ['exec-and-forget borders']`
+    *   AeroSpaceの起動完了後に実行するコマンドです。ここでは`borders`というコマンドを実行しています。これはおそらくウィンドウの境界線に関する設定を適用するものです。
+
+### 正規化 (Normalization)
+
+*   `enable-normalization-flatten-containers = true`
+    *   ウィンドウコンテナが1つしかない場合、そのコンテナを自動的に「平坦化」して不要なネストを解消します。
+*   `enable-normalization-opposite-orientation-for-nested-containers = true`
+    *   コンテナをネスト（入れ子に）する際、親コンテナとは逆の向き（水平/垂直）を自動で設定し、レイアウトが直感的になるようにします。
+
+### レイアウト (Layouts)
+
+*   `accordion-padding = 20`
+    *   アコーディオンレイアウト（ウィンドウが重なって表示される形式）の際の、ウィンドウ間の余白（パディング）を20ピクセルに設定します。
+*   `default-root-container-layout = 'tiles'`
+    *   デフォルトのレイアウトを`tiles`（タイル型）に設定します。ウィンドウは画面を分割して並べられます。
+*   `default-root-container-orientation = 'auto'`
+    *   デフォルトのコンテナの向きを`auto`に設定します。これにより、モニターの形状（横長か縦長か）に応じて、自動的に水平または垂直分割が選択されます。
+
+### マウス追従
+
+*   `on-focused-monitor-changed = ['move-mouse monitor-lazy-center']`
+    *   フォーカスが別のモニターに移動した際、マウスカーソルをそのモニターの中央に自動で移動させます。
+
+### macOS統合
+
+*   `automatically-unhide-macos-hidden-apps = false`
+    *   macOSの「アプリケーションを隠す（cmd-h）」機能で隠されたアプリを自動的に再表示するかどうかの設定です。`false`なので、自動では再表示しません。
+
+### キーマッピング (Key-Mapping)
+
+*   `[key-mapping]`
+    *   `preset = 'qwerty'`
+        *   キーボードレイアウトのプリセットを`qwerty`に設定します。
+
+### ウィンドウ間の隙間 (Gaps)
+
+*   `[gaps]`
+    *   `inner.horizontal = 3`
+    *   `inner.vertical = 3`
+        *   ウィンドウ同士の隙間を水平・垂直ともに3ピクセルに設定します。
+    *   `outer.left = 3`
+    *   `outer.bottom = 3`
+    *   `outer.top = 3`
+    *   `outer.right = 3`
+        *   モニターの端とウィンドウの隙間を、上下左右すべて3ピクセルに設定します。
+
+### メインモードのキーバインド (`mode.main.binding`)
+
+*   `alt-slash` / `alt-comma`: レイアウトをそれぞれ`tiles`（タイル）と`accordion`（アコーディオン）に切り替えます。
+*   `alt-h/j/k/l`: フォーカスを左/下/上/右のウィンドウに移動します。
+*   `alt-shift-h/j/k/l`: 現在のウィンドウを左/下/上/右に移動します。
+*   `alt-minus` / `alt-shift-minus`: ウィンドウサイズを縮小/拡大します。
+*   `alt-1`〜`alt-9`, `alt-a`など: 指定した名前のワークスペースに切り替えます。
+*   `alt-shift-1`〜`alt-9`, `alt-shift-a`など: 現在のウィンドウを指定したワークスペースに移動します。
+*   `alt-shift-tab`: 現在のワークスペースを次のモニターに移動します。
+*   `alt-shift-semicolon`: `service`モードに切り替えます。
+
+### サービスモードのキーバインド (`mode.service.binding`)
+
+`service`モードは、設定のリロードなど、普段は使わない操作をまとめたモードです。
+
+*   `esc`: 設定ファイルをリロードし、`main`モードに戻ります。
+*   `r`: 現在のワークスペースのレイアウトをリセットし、`main`モードに戻ります。
+*   `f`: 現在のウィンドウをフローティング（浮動）/タイリング（タイル）レイアウトで切り替え、`main`モードに戻ります。
+*   `backspace`: 現在のウィンドウ以外をすべて閉じ、`main`モードに戻ります。
+
+### ウィンドウ検出 (`on-window-detected`)
+
+特定のアプリケーションが起動したときに、自動的に指定のワークスペースに移動させる設定です。
+
+*   **Browser.app** (`company.thebrowser.Browser`) → ワークスペース `1`
+*   **WezTerm** (`com.github.wez.wezterm`) → ワークスペース `2`
+*   **Slack** (`com.tinyspeck.slackmacgap`) → ワークスペース `S`
+*   **Spotify** (`com.spotify.client`) → ワークスペース `M`
+*   **Notion** (`notion.id`) → ワークスペース `N`
+*   **Zoom** (`us.zoom.xos`) → ワークスペース `Z`
+
+### ワークスペースのモニター割り当て
+
+*   `[workspace-to-monitor-force-assignment]`
+    *   `Z = ['Display']`
+        *   ワークスペース`Z`を`Display`という名前のモニターに強制的に割り当てます。Zoomが常に特定のモニターで開くようにするための設定です。
