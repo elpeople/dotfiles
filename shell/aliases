@@ -54,7 +54,7 @@ case "$(uname -s)" in
 
         if grep -q -i "microsoft" /proc/version 2>/dev/null; then
             # For WSL (Windows Subsystem for Linux)
-            alias tmux='env -i PATH=/usr/bin:/bin:/usr/local/bin SHELL=/usr/bin/zsh tmux'
+            #alias tmux='env -i PATH=/usr/bin:/bin:/usr/local/bin SHELL=/usr/bin/zsh tmux'
             alias comfyui='cd ~/comfyui/ComfyUI && python main.py'
             alias comfyui-gpu='cd ~/comfyui/ComfyUI && python main.py --highvram'
             alias comfyui-fast='cd ~/comfyui/ComfyUI && python main.py --highvram --fast'
@@ -62,7 +62,7 @@ case "$(uname -s)" in
             alias webui-all='openwebui & sleep 3 && comfyui-gpu'
         else
             # For standard Linux distributions
-            alias tmux='env -i PATH=/usr/bin:/bin:/usr/local/bin SHELL=/usr/bin/zsh tmux'
+            :
         fi
         ;;
     Darwin*)

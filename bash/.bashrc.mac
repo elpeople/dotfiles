@@ -179,7 +179,7 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_STATE_HOME="${HOME}/.local/state"
 # FZF_DEFAULT_OPTS_FILEをXDG準拠の構成にポイントさせる
-export FZF_DEFAULT_OPTS_FILE="$HOME/dotfiles/fzf-config/.config/fzf/fzf.conf"
+# export FZF_DEFAULT_OPTS_FILE="$HOME/dotfiles/fzf-config/.config/fzf/fzf.conf"
 # fzfバイナリが非標準のサブモジュール場所にあるため、PATHに含める
 export PATH="$HOME/dotfiles/fzf/.config/fzf/fzf/bin:$PATH"
 export EDITOR=vim

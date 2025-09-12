@@ -17,6 +17,11 @@ if [ -f "$HOME/dotfiles/shell/aliases" ]; then
     source "$HOME/dotfiles/shell/aliases"
 fi
 
+# Cargo and rmpc (from local)
+. "$HOME/.cargo/env"
+export PATH="$HOME/.cargo/bin:$PATH"
+alias rmpc="$HOME/.cargo/bin/rmpc"
+
 # Load OS-specific bashrc
 if [ -n "$WSL_DISTRO_NAME" ] || grep -q microsoft /proc/version 2>/dev/null; then
     echo "DEBUG: Detected WSL environment."
@@ -162,10 +167,5 @@ alias rebuild='podcast-download.sh https://rebuild.fm/'
 
 # Castero alias (from remote)
 alias castero='~/.local/bin/castero-wrapper.sh'
-
-# Cargo and rmpc (from local)
-. "$HOME/.cargo/env"
-export PATH="$HOME/.cargo/bin:$PATH"
-alias rmpc="$HOME/.cargo/bin/rmpc"
 
 # --- Merged Changes End ---

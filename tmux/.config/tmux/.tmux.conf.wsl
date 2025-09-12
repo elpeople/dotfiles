@@ -16,8 +16,9 @@ set-option -g history-limit 100000
 set -s set-clipboard off
 
 # color
-set -g default-terminal "screen-256color"
+set -g default-terminal "xterm-256color"
 set-option -ga terminal-overrides ",xterm-256color:Tc"
+set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 
 # reduce delay
 set -sg escape-time 10
@@ -58,7 +59,7 @@ bind C-y display-popup \
   -h 80% \
   -E "lazygit"
 bind C-n display-popup -E 'bash -i -c "read -p \"Session name: \" name; tmux new-session -d -s \$name && tmux switch-client -t \$name"'
-bind C-j display-popup -E "tmux list-sessions | sed -E 's/:.*$//' | grep -v \"^$(tmux display-message -p '#S')\$\" | fzf --reverse | xargs tmux switch-client -t"
+bind C-j display-popup -E "tmux list-sessions | sed -E 's/:.*$//' | grep -v \"^$(tmux display-message -p '#S')$\" | fzf --reverse | xargs tmux switch-client -t"
 bind C-p display-popup -E "ipython"
 bind C-f display-popup \
   -w 80% \
@@ -100,6 +101,7 @@ bind-key -T copy-mode-vi v send-keys -X begin-selection
 # WSL環境でのクリップボード最適化
 if-shell "grep -q Microsoft /proc/version" \
     "bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'clip.exe'" \
+    "bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'clip.exe'" \
     "bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -sel clip -i'"
 
 if-shell "grep -q Microsoft /proc/version" \
