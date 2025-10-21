@@ -11,10 +11,7 @@ fi
 export EDITOR=vim
 export PATH="$HOME/.local/bin:$PATH"
 
-# zinit
-if [[ -s "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
-  source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-fi
+
 
 # anyenv
 if command -v anyenv &>/dev/null; then
