@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Dotfiles installation script using GNU Stow
-# Usage: ./install.sh [package_name] or ./install.sh all
+# Enhanced Dotfiles installation script using GNU Stow
+# Supports OS-specific package selection and safe backup/restore.
 
 set -e
 
@@ -15,224 +15,186 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Available packages
-PACKAGES=(
-    "bash"
-    "zsh"
-    "vim"
-    "tmux"
-    "i3"
-    "ranger"
-    "wezterm"
-    "lazygit"
-    "local_bin"
-    "w3m"
-    "nvim"
+# ---------------------------------------------------------
+# 1. OS Detection Logic
+# ---------------------------------------------------------
+detect_os() {
+    local os_name="unknown"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        os_name="mac"
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        if grep -qi Microsoft /proc/version 2>/dev/null; then
+            os_name="wsl"
+        else
+            os_name="lin"
+        fi
+    elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+        os_name="win"
+    fi
+    echo "$os_name"
+}
+
+CURRENT_OS=$(detect_os)
+
+# ---------------------------------------------------------
+# 2. Package Definitions
+# ---------------------------------------------------------
+# OSに関わらずインストールするもの
+COMMON_PACKAGES=(
+    "bash" "zsh" "vim" "nvim" "tmux" "ranger" "wezterm" "lazygit" 
+    "local_bin" "fzf" "catppuccin" "screen" "zoxide" "eza" "bat" 
+    "ripgrep" "yazi" "atuin" "delta" "dust" "mise"
 )
 
-# Function to print colored output
-print_status() {
-    echo -e "${BLUE}[INFO]${NC} $1"
+# Mac固有のもの
+MAC_PACKAGES=("aerospace" "borders")
+
+# Linux固有のもの
+LIN_PACKAGES=("i3" "w3m" "newsboat")
+
+# WSL固有のもの
+WSL_PACKAGES=("w3m")
+
+# Windows(Git Bash等)固有のもの
+WIN_PACKAGES=()
+
+# 推奨パッケージの決定
+get_recommended_packages() {
+    local packages=("${COMMON_PACKAGES[@]}")
+    case "$CURRENT_OS" in
+        "mac") packages+=("${MAC_PACKAGES[@]}") ;;
+        "lin") packages+=("${LIN_PACKAGES[@]}") ;;
+        "wsl") packages+=("${WSL_PACKAGES[@]}") ;;
+    esac
+    echo "${packages[@]}"
 }
 
-print_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
-}
+# ---------------------------------------------------------
+# 3. Helper Functions
+# ---------------------------------------------------------
+print_status() { echo -e "${BLUE}[INFO]${NC} $1"; }
+print_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
+print_warning() { echo -e "${YELLOW}[WARNING]${NC} $1"; }
+print_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
-print_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
-
-print_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
-
-# Function to check if stow is installed
 check_stow() {
     if ! command -v stow &> /dev/null; then
         print_error "GNU Stow is not installed. Please install it first."
-        print_status "Ubuntu/Debian: sudo apt install stow"
-        print_status "macOS: brew install stow"
         exit 1
     fi
 }
 
-# Function to backup existing files
 backup_existing() {
     local package="$1"
-    print_status "Checking for existing files for package: $package"
+    # stow -n (simulation mode) で衝突をチェック
+    local conflicts=$(stow -n "$package" 2>&1 | grep "existing target" || true)
     
-    # Use stow's simulation mode to check for conflicts
-    if stow -n "$package" 2>&1 | grep -q "existing target"; then
-        print_warning "Found existing files that would conflict with $package"
-        read -p "Do you want to backup existing files? (y/N): " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
-            mkdir -p "$backup_dir"
-            
-            # Extract conflicting files and backup
-            stow -n "$package" 2>&1 | grep "existing target" | while read -r line; do
-                if [[ $line =~ existing\ target\ is\ (.+)\ but\ link\ target\ is ]]; then
-                    local file="${BASH_REMATCH[1]}"
-                    if [[ -f "$file" || -d "$file" ]]; then
-                        print_status "Backing up: $file"
-                        cp -r "$file" "$backup_dir/"
-                        rm -rf "$file"
-                    fi
+    if [[ -n "$conflicts" ]]; then
+        print_warning "Found existing files for $package. Backing up..."
+        local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)_$package"
+        mkdir -p "$backup_dir"
+        
+        echo "$conflicts" | while read -r line; do
+            if [[ $line =~ existing\ target\ is\ (.+)\ but\ link\ target\ is ]]; then
+                local file_path="${BASH_REMATCH[1]}"
+                # ファイルがシンボリックリンクでない場合のみバックアップ
+                if [[ -e "$file_path" && ! -L "$file_path" ]]; then
+                    print_status "Backing up: $file_path"
+                    # ディレクトリ構造を維持してコピー
+                    mkdir -p "$backup_dir/$(dirname "$file_path")"
+                    cp -r "$file_path" "$backup_dir/$file_path"
+                    rm -rf "$file_path"
+                elif [[ -L "$file_path" ]]; then
+                    print_status "Removing existing symlink: $file_path"
+                    rm "$file_path"
                 fi
-            done
-            print_success "Backup created in: $backup_dir"
-        else
-            print_error "Cannot proceed without resolving conflicts"
-            return 1
-        fi
+            fi
+        done
+        print_success "Backup created in: $backup_dir"
     fi
 }
 
-# Function to install a package
+# ---------------------------------------------------------
+# 4. Main Commands
+# ---------------------------------------------------------
 install_package() {
     local package="$1"
-    
     if [[ ! -d "$package" ]]; then
-        print_error "Package '$package' not found in $DOTFILES_DIR"
+        print_error "Package '$package' not found."
         return 1
     fi
-    
-    print_status "Installing package: $package"
-    
-    # Backup existing files if necessary
-    backup_existing "$package" || return 1
-    
-    # Install the package
+    backup_existing "$package"
     if stow "$package"; then
-        print_success "Successfully installed: $package"
+        print_success "Installed: $package"
     else
-        print_error "Failed to install: $package"
-        return 1
+        print_error "Failed: $package"
     fi
 }
 
-# Function to uninstall a package
 uninstall_package() {
     local package="$1"
-    
-    print_status "Uninstalling package: $package"
-    
-    if stow -D "$package"; then
-        print_success "Successfully uninstalled: $package"
-    else
-        print_error "Failed to uninstall: $package"
-        return 1
-    fi
+    print_status "Uninstalling: $package"
+    stow -D "$package" && print_success "Uninstalled: $package"
 }
 
-# Function to reinstall a package
-reinstall_package() {
-    local package="$1"
-    
-    print_status "Reinstalling package: $package"
-    uninstall_package "$package"
-    install_package "$package"
-}
-
-# Function to list available packages
-list_packages() {
-    print_status "Available packages:"
-    for package in "${PACKAGES[@]}"; do
-        if [[ -d "$package" ]]; then
-            echo "  ✓ $package"
-        else
-            echo "  ✗ $package (not found)"
-        fi
-    done
-}
-
-# Function to show help
-show_help() {
-    echo "Dotfiles management script using GNU Stow"
-    echo ""
-    echo "Usage: $0 [COMMAND] [PACKAGE]"
-    echo ""
-    echo "Commands:"
-    echo "  install [package|all]    Install package(s)"
-    echo "  uninstall [package|all]  Uninstall package(s)"
-    echo "  reinstall [package|all]  Reinstall package(s)"
-    echo "  list                     List available packages"
-    echo "  status                   Show current stow status"
-    echo "  help                     Show this help message"
-    echo ""
-    echo "Examples:"
-    echo "  $0 install zsh           Install zsh configuration"
-    echo "  $0 install all           Install all packages"
-    echo "  $0 uninstall tmux        Uninstall tmux configuration"
-    echo "  $0 reinstall all         Reinstall all packages"
-}
-
-# Function to show status
 show_status() {
-    print_status "Current stow status:"
-    for package in "${PACKAGES[@]}"; do
-        if [[ -d "$package" ]]; then
-            echo -n "  $package: "
-            if stow -n "$package" 2>&1 | grep -q "WARNING"; then
-                echo -e "${GREEN}installed${NC}"
-            else
-                echo -e "${YELLOW}not installed${NC}"
-            fi
+    print_status "OS: $CURRENT_OS"
+    print_status "Current Status:"
+    local all_known=("${COMMON_PACKAGES[@]}" "${MAC_PACKAGES[@]}" "${LIN_PACKAGES[@]}" "${WSL_PACKAGES[@]}")
+    for pkg in $(ls -d */ | sed 's/\///'); do
+        # .gitなどはスキップ
+        [[ "$pkg" == "old" || "$pkg" == "scripts" || "$pkg" == "config" ]] && continue
+        
+        echo -n "  $pkg: "
+        if stow -n "$pkg" 2>&1 | grep -q "WARNING: skipping"; then
+            echo -e "${GREEN}installed (linked)${NC}"
+        else
+            echo -e "${YELLOW}not installed${NC}"
         fi
     done
 }
 
-# Main script logic
+show_help() {
+    echo "Usage: $0 [command] [package|all]"
+    echo "Commands:"
+    echo "  install [pkg|all]   Install package(s) (with auto backup)"
+    echo "  uninstall [pkg|all] Remove symlinks"
+    echo "  list                List all packages in this directory"
+    echo "  status              Show current installation status"
+    echo "  help                Show this message"
+    echo ""
+    echo "Detected OS: $CURRENT_OS"
+}
+
+# ---------------------------------------------------------
+# 5. Execution
+# ---------------------------------------------------------
 main() {
     check_stow
-    
-    case "${1:-help}" in
+    local cmd="${1:-help}"
+    local target="${2:-}"
+
+    case "$cmd" in
         "install")
-            if [[ "${2:-}" == "all" ]]; then
-                for package in "${PACKAGES[@]}"; do
-                    if [[ -d "$package" ]]; then
-                        install_package "$package"
-                    fi
-                done
-            elif [[ -n "${2:-}" ]]; then
-                install_package "$2"
+            if [[ "$target" == "all" ]]; then
+                local pkgs=$(get_recommended_packages)
+                for p in $pkgs; do install_package "$p"; done
+            elif [[ -n "$target" ]]; then
+                install_package "$target"
             else
-                print_error "Please specify a package name or 'all'"
-                exit 1
+                print_error "Specify package or 'all'"; exit 1
             fi
             ;;
         "uninstall")
-            if [[ "${2:-}" == "all" ]]; then
-                for package in "${PACKAGES[@]}"; do
-                    if [[ -d "$package" ]]; then
-                        uninstall_package "$package"
-                    fi
-                done
-            elif [[ -n "${2:-}" ]]; then
-                uninstall_package "$2"
-            else
-                print_error "Please specify a package name or 'all'"
-                exit 1
-            fi
-            ;;
-        "reinstall")
-            if [[ "${2:-}" == "all" ]]; then
-                for package in "${PACKAGES[@]}"; do
-                    if [[ -d "$package" ]]; then
-                        reinstall_package "$package"
-                    fi
-                done
-            elif [[ -n "${2:-}" ]]; then
-                reinstall_package "$2"
-            else
-                print_error "Please specify a package name or 'all'"
-                exit 1
+            if [[ "$target" == "all" ]]; then
+                local pkgs=$(get_recommended_packages)
+                for p in $pkgs; do uninstall_package "$p"; done
+            elif [[ -n "$target" ]]; then
+                uninstall_package "$target"
             fi
             ;;
         "list")
-            list_packages
+            ls -d */ | sed 's/\///'
             ;;
         "status")
             show_status

@@ -127,3 +127,4 @@ export PATH=/home/elpeople/.opencode/bin:$PATH
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+. "$HOME/.local/share/../bin/env"

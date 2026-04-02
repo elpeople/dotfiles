@@ -169,3 +169,9 @@ alias rebuild='podcast-download.sh https://rebuild.fm/'
 alias castero='~/.local/bin/castero-wrapper.sh'
 
 # --- Merged Changes End ---
+. "$HOME/.local/share/../bin/env"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
