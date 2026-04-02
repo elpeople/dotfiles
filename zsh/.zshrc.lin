@@ -306,3 +306,8 @@ fi
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
+
+# fzf settings
+# fzfバイナリが非標準のサブモジュール場所にあるため、PATHに含める
+export PATH="$HOME/dotfiles/fzf/.config/fzf/bin:$PATH"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -181,7 +181,7 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 # FZF_DEFAULT_OPTS_FILEをXDG準拠の構成にポイントさせる
 # export FZF_DEFAULT_OPTS_FILE="$HOME/dotfiles/fzf-config/.config/fzf/fzf.conf"
 # fzfバイナリが非標準のサブモジュール場所にあるため、PATHに含める
-export PATH="$HOME/dotfiles/fzf/.config/fzf/fzf/bin:$PATH"
+export PATH="$HOME/dotfiles/fzf/.config/fzf/bin:$PATH"
 export EDITOR=vim
 export SCREENDIR=$HOME/.screen
 #export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/linuxbrew/.linuxbrew/bin

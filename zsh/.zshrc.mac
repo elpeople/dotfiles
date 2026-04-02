@@ -262,3 +262,8 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 # zoxide
 eval "$(zoxide init zsh)"
+
+# fzf settings
+# fzfバイナリが非標準のサブモジュール場所にあるため、PATHに含める
+export PATH="$HOME/dotfiles/fzf/.config/fzf/bin:$PATH"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
