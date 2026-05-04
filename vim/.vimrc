@@ -73,7 +73,7 @@ let g:vimfiler_as_default_explorer = 1
 set number
 set relativenumber
 set title
-set paste
+set nopaste
 set ambiwidth=double
 set tabstop=2
 set expandtab
@@ -277,3 +277,9 @@ highlight LineNr ctermbg=NONE guibg=NONE
 highlight Folded ctermbg=NONE guibg=NONE
 highlight EndOfBuffer ctermbg=NONE guibg=NONE
 
+" インサートモードで Ctrl + f / b で単語移動するように設定（例）
+inoremap <C-f> <C-o>w
+inoremap <C-b> <C-o>b
+" Test mapping\ninoremap <C-g> <C-o>w
+" 必要な時（コピペする時など）だけ F11キー などで切り替えられるようにする
+set pastetoggle=<F11>

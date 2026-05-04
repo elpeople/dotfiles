@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/Users/elpeople/.zsh/completions:"* ]]; then export FPATH="/Users/elpeople/.zsh/completions:$FPATH"; fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -130,3 +132,4 @@ unset __conda_setup
 
 # opencode
 export PATH=/Users/elpeople/.opencode/bin:$PATH
+. "/Users/elpeople/.deno/env"

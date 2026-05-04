@@ -143,3 +143,5 @@ alias rebuild='podcast-download.sh https://rebuild.fm/'
 # castero 起動エイリアス
 alias castero='source ~/venv/castero/bin/activate && castero'
 alias castero='~/.local/bin/castero-wrapper.sh'
+. "/Users/elpeople/.deno/env"
+source /Users/elpeople/.local/share/bash-completion/completions/deno.bash

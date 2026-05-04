@@ -1,6 +1,6 @@
 # macOS（Apple Silicon）用設定
 if [[ "$(uname)" == "Darwin" ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  eval "$(/usr/local/bin/brew shellenv)"
   fi
 
   # Linux（WSL）用設定

@@ -101,3 +101,13 @@ repo = 'simeji/winresizer'
 repo = 'tyru/open-browser.vim'
 [[plugins]]
 repo = 'previm/previm'
+
+[[plugins]]
+repo = 'vim-skk/skkeleton'
+
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
