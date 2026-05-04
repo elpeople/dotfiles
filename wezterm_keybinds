@@ -1,0 +1,161 @@
+Leader: Char('q') CTRL 2s
+Default key table
+-----------------
+
+	CTRL           Tab     ->   ActivateTabRelative(1)
+	SHIFT | CTRL   Tab     ->   ActivateTabRelative(-1)
+	ALT            Enter   ->   ToggleFullScreen
+	LEADER         $       ->   PromptInputLine(PromptInputLine { action: EmitEvent("user-defined-0"), initial_value: None, description: "(wezterm) Set workspace title:", prompt: "> " })
+	CTRL           +       ->   IncreaseFontSize
+	CTRL           -       ->   DecreaseFontSize
+	CTRL           0       ->   ResetFontSize
+	SUPER          1       ->   ActivateTab(0)
+	SUPER          2       ->   ActivateTab(1)
+	SUPER          3       ->   ActivateTab(2)
+	SUPER          4       ->   ActivateTab(3)
+	SUPER          5       ->   ActivateTab(4)
+	SUPER          6       ->   ActivateTab(5)
+	SUPER          7       ->   ActivateTab(6)
+	SUPER          8       ->   ActivateTab(7)
+	SUPER          9       ->   ActivateTab(-1)
+	CTRL           P       ->   ActivateCommandPalette
+	CTRL           R       ->   ReloadConfiguration
+	LEADER         W       ->   PromptInputLine(PromptInputLine { action: EmitEvent("user-defined-1"), initial_value: None, description: "(wezterm) Create new workspace:", prompt: "> " })
+	SHIFT | CTRL   [       ->   PaneSelect(PaneSelectArguments { alphabet: "", mode: Activate, show_pane_ids: false })
+	LEADER         [       ->   ActivateCopyMode
+	LEADER         a       ->   ActivateKeyTable { name: "activate_pane", timeout_milliseconds: Some(1000), replace_current: false, one_shot: true, until_unknown: false, prevent_fallback: false }
+	SUPER          c       ->   CopyTo(Clipboard)
+	LEADER         d       ->   SplitVertical(SpawnCommand domain=CurrentPaneDomain)
+	LEADER         h       ->   ActivatePaneDirection(Left)
+	LEADER         j       ->   ActivatePaneDirection(Down)
+	LEADER         k       ->   ActivatePaneDirection(Up)
+	LEADER         l       ->   ActivatePaneDirection(Right)
+	SUPER          p       ->   ActivateCommandPalette
+	LEADER         r       ->   SplitHorizontal(SpawnCommand domain=CurrentPaneDomain)
+	LEADER         s       ->   ActivateKeyTable { name: "resize_pane", timeout_milliseconds: None, replace_current: false, one_shot: false, until_unknown: false, prevent_fallback: false }
+	SUPER          t       ->   SpawnTab(CurrentPaneDomain)
+	SUPER          v       ->   PasteFrom(Clipboard)
+	SUPER          w       ->   CloseCurrentTab { confirm: true }
+	LEADER         w       ->   ShowLauncherArgs(LauncherActionArgs { flags: WORKSPACES, title: Some("Select workspace"), help_text: None, fuzzy_help_text: None, alphabet: None })
+	LEADER         x       ->   CloseCurrentPane { confirm: true }
+	LEADER         z       ->   TogglePaneZoomState
+	LEADER         {       ->   MoveTabRelative(-1)
+	LEADER         }       ->   MoveTabRelative(1)
+
+Key Table: activate_pane
+------------------------
+
+	       h   ->   ActivatePaneDirection(Left)
+	       j   ->   ActivatePaneDirection(Down)
+	       k   ->   ActivatePaneDirection(Up)
+	       l   ->   ActivatePaneDirection(Right)
+
+Key Table: copy_mode
+--------------------
+
+	       Enter    ->   Multiple([CopyTo(ClipboardAndPrimarySelection), CopyMode(Close)])
+	       Escape   ->   CopyMode(Close)
+	       $        ->   CopyMode(MoveToEndOfLineContent)
+	       0        ->   CopyMode(MoveToStartOfLine)
+	       ;        ->   CopyMode(JumpAgain)
+	       F        ->   CopyMode(JumpBackward { prev_char: false })
+	       G        ->   CopyMode(MoveToScrollbackBottom)
+	       H        ->   CopyMode(MoveToViewportTop)
+	       L        ->   CopyMode(MoveToViewportBottom)
+	       M        ->   CopyMode(MoveToViewportMiddle)
+	       O        ->   CopyMode(MoveToSelectionOtherEndHoriz)
+	       T        ->   CopyMode(JumpBackward { prev_char: true })
+	       V        ->   CopyMode(SetSelectionMode(Some(Line)))
+	       ^        ->   CopyMode(MoveToStartOfLineContent)
+	       b        ->   CopyMode(MoveBackwardWord)
+	CTRL   b        ->   CopyMode(PageUp)
+	CTRL   c        ->   CopyMode(Close)
+	CTRL   d        ->   CopyMode(MoveByPage(0.5))
+	       e        ->   CopyMode(MoveForwardWordEnd)
+	       f        ->   CopyMode(JumpForward { prev_char: false })
+	CTRL   f        ->   CopyMode(PageDown)
+	       g        ->   CopyMode(MoveToScrollbackTop)
+	       h        ->   CopyMode(MoveLeft)
+	       j        ->   CopyMode(MoveDown)
+	       k        ->   CopyMode(MoveUp)
+	       l        ->   CopyMode(MoveRight)
+	       o        ->   CopyMode(MoveToSelectionOtherEnd)
+	       q        ->   CopyMode(Close)
+	       t        ->   CopyMode(JumpForward { prev_char: true })
+	CTRL   u        ->   CopyMode(MoveByPage(-0.5))
+	       v        ->   CopyMode(SetSelectionMode(Some(Cell)))
+	CTRL   v        ->   CopyMode(SetSelectionMode(Some(Block)))
+	       w        ->   CopyMode(MoveForwardWord)
+	       y        ->   CopyTo(Clipboard)
+
+Key Table: resize_pane
+----------------------
+
+	       Enter   ->   PopKeyTable
+	       h       ->   AdjustPaneSize(Left, 1)
+	       j       ->   AdjustPaneSize(Down, 1)
+	       k       ->   AdjustPaneSize(Up, 1)
+	       l       ->   AdjustPaneSize(Right, 1)
+
+Key Table: search_mode
+----------------------
+
+	       Enter       ->   CopyMode(PriorMatch)
+	       Escape      ->   CopyMode(Close)
+	CTRL   n           ->   CopyMode(NextMatch)
+	CTRL   p           ->   CopyMode(PriorMatch)
+	CTRL   r           ->   CopyMode(CycleMatchType)
+	CTRL   u           ->   CopyMode(ClearPattern)
+	       PageUp      ->   CopyMode(PriorMatchPage)
+	       PageDown    ->   CopyMode(NextMatchPage)
+	       UpArrow     ->   CopyMode(PriorMatch)
+	       DownArrow   ->   CopyMode(NextMatch)
+
+Mouse
+-----
+
+	               Down { streak: 1, button: Left }           ->   SelectTextAtMouseCursor(Cell)
+	SHIFT          Down { streak: 1, button: Left }           ->   ExtendSelectionToMouseCursor(Cell)
+	ALT            Down { streak: 1, button: Left }           ->   SelectTextAtMouseCursor(Block)
+	SHIFT | ALT    Down { streak: 1, button: Left }           ->   ExtendSelectionToMouseCursor(Block)
+	               Down { streak: 1, button: Middle }         ->   PasteFrom(PrimarySelection)
+	               Down { streak: 1, button: WheelUp(1) }     ->   ScrollByCurrentEventWheelDelta
+	               Down { streak: 1, button: WheelDown(1) }   ->   ScrollByCurrentEventWheelDelta
+	               Down { streak: 2, button: Left }           ->   SelectTextAtMouseCursor(Word)
+	               Down { streak: 3, button: Left }           ->   SelectTextAtMouseCursor(Line)
+	               Drag { streak: 1, button: Left }           ->   ExtendSelectionToMouseCursor(Cell)
+	ALT            Drag { streak: 1, button: Left }           ->   ExtendSelectionToMouseCursor(Block)
+	SHIFT | CTRL   Drag { streak: 1, button: Left }           ->   StartWindowDrag
+	SUPER          Drag { streak: 1, button: Left }           ->   StartWindowDrag
+	               Drag { streak: 2, button: Left }           ->   ExtendSelectionToMouseCursor(Word)
+	               Drag { streak: 3, button: Left }           ->   ExtendSelectionToMouseCursor(Line)
+	               Up { streak: 1, button: Left }             ->   CompleteSelectionOrOpenLinkAtMouseCursor(ClipboardAndPrimarySelection)
+	SHIFT          Up { streak: 1, button: Left }             ->   CompleteSelectionOrOpenLinkAtMouseCursor(ClipboardAndPrimarySelection)
+	ALT            Up { streak: 1, button: Left }             ->   CompleteSelection(ClipboardAndPrimarySelection)
+	SHIFT | ALT    Up { streak: 1, button: Left }             ->   CompleteSelectionOrOpenLinkAtMouseCursor(PrimarySelection)
+	               Up { streak: 2, button: Left }             ->   CompleteSelection(ClipboardAndPrimarySelection)
+	               Up { streak: 3, button: Left }             ->   CompleteSelection(ClipboardAndPrimarySelection)
+
+Mouse: alt_screen
+-----------------
+
+	               Down { streak: 1, button: Left }     ->   SelectTextAtMouseCursor(Cell)
+	SHIFT          Down { streak: 1, button: Left }     ->   ExtendSelectionToMouseCursor(Cell)
+	ALT            Down { streak: 1, button: Left }     ->   SelectTextAtMouseCursor(Block)
+	SHIFT | ALT    Down { streak: 1, button: Left }     ->   ExtendSelectionToMouseCursor(Block)
+	               Down { streak: 1, button: Middle }   ->   PasteFrom(PrimarySelection)
+	               Down { streak: 2, button: Left }     ->   SelectTextAtMouseCursor(Word)
+	               Down { streak: 3, button: Left }     ->   SelectTextAtMouseCursor(Line)
+	               Drag { streak: 1, button: Left }     ->   ExtendSelectionToMouseCursor(Cell)
+	ALT            Drag { streak: 1, button: Left }     ->   ExtendSelectionToMouseCursor(Block)
+	SHIFT | CTRL   Drag { streak: 1, button: Left }     ->   StartWindowDrag
+	SUPER          Drag { streak: 1, button: Left }     ->   StartWindowDrag
+	               Drag { streak: 2, button: Left }     ->   ExtendSelectionToMouseCursor(Word)
+	               Drag { streak: 3, button: Left }     ->   ExtendSelectionToMouseCursor(Line)
+	               Up { streak: 1, button: Left }       ->   CompleteSelectionOrOpenLinkAtMouseCursor(ClipboardAndPrimarySelection)
+	SHIFT          Up { streak: 1, button: Left }       ->   CompleteSelectionOrOpenLinkAtMouseCursor(ClipboardAndPrimarySelection)
+	ALT            Up { streak: 1, button: Left }       ->   CompleteSelection(ClipboardAndPrimarySelection)
+	SHIFT | ALT    Up { streak: 1, button: Left }       ->   CompleteSelectionOrOpenLinkAtMouseCursor(PrimarySelection)
+	               Up { streak: 2, button: Left }       ->   CompleteSelection(ClipboardAndPrimarySelection)
+	               Up { streak: 3, button: Left }       ->   CompleteSelection(ClipboardAndPrimarySelection)
+
