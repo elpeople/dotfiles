@@ -4,6 +4,7 @@
 [submodule "ranger/.config/ranger/colorschemes"]
 	path = ranger/.config/ranger/colorschemes
 	url = https://github.com/ranger/colorschemes
+	ignore = untracked
 [submodule "tmux/.config/tmux/plugins/tpm"]
 	path = tmux/.config/tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
