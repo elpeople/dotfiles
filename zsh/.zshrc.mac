@@ -259,6 +259,19 @@ export PATH="$HOME/.local/bin:$PATH"
 export GOPATH=$HOME
 export PATH=$PATH:$GOPATH/bin
 export PATH="/opt/homebrew/bin:$PATH"
+export MANPATH="$HOME/.local/share/man:$MANPATH"
+export MANPAGER=less                 # man 専用ページャーとして less を使う
+export LESS=-R                       # 色付き表示を保持
+
+export LESS_TERMCAP_mb=$'\e[1;31m'   # 強調 赤
+export LESS_TERMCAP_md=$'\e[1;34m'   # 太字 青
+export LESS_TERMCAP_me=$'\e[0m'      # reset
+
+export LESS_TERMCAP_so=$'\e[7m'      # 反転
+export LESS_TERMCAP_se=$'\e[0m'
+
+export LESS_TERMCAP_us=$'\e[4;32m'   # 下線 緑
+export LESS_TERMCAP_ue=$'\e[0m'
 
 # zoxide
 eval "$(zoxide init zsh)"
