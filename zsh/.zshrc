@@ -118,6 +118,18 @@ if [[ -f ~/.config/zsh/p10k-catppuccin.zsh ]]; then
     source ~/.config/zsh/p10k-catppuccin.zsh
 fi
 
+# ghq
+function ghq-fzf() {
+  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+  if [ -n "$src" ]; then
+    BUFFER="cd $(ghq root)/$src"
+    zle accept-line
+  fi
+  zle -R -c
+}
+zle -N ghq-fzf
+bindkey '^g' ghq-fzf
+
 # Ranger cd function
 # ranger_cd() {
 #   temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
