@@ -12,6 +12,25 @@ fi
 # 共通設定
 export EDITOR=vim
 export PATH="$HOME/.local/bin:$PATH"
+# Control-x Control-r で redo
+bindkey '^X^R' redo
+# edit-command-line を読み込む
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+# Esc→e (Alt-e) で現在行を $EDITOR で編集
+bindkey '^[e' edit-command-line
+
+# 前方一致履歴検索のベースになるウィジェットを読み込む
+autoload -Uz history-search-end
+
+ # 前方一致しながら行末にカーソルを置くウィジェットを定義
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end  history-search-end
+
+# # Control-p / Control-n を前方一致履歴検索に割り当て
+bindkey '^p' history-beginning-search-backward-end
+bindkey '^n' history-beginning-search-forward-end
 
 # zinit
 if [[ -s "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
