@@ -1,0 +1,19 @@
+# https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+
+customCommands:
+  - command: git cz
+    context: files
+    subprocess: true
+    key: C
+
+gui:
+  language: "ja"
+  showIcons: true
+
+# log customize
+git:
+  branchLogCmd: "git log --graph --color=always --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' {{branchName}} --"
+  allBranchesLogCmd: "git log --graph --color=always --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all"
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never # ここの設定を使用する場合はdeltaのインストールが必要
