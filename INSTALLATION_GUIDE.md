@@ -1,158 +1,71 @@
 # dotfiles インストールガイド
 
-このドットファイルリポジトリには、様々なツールや設定が含まれています。
-`stow` を使用してシンボリックリンクを管理していますが、一部のツールは手動でのインストールや追加の設定が必要です。
+このドットファイルリポジトリは、`ghq` で管理し、`stow` を使用してシンボリックリンクを張る構成になっています。
 
 ## はじめに
 
-このガイドは、`stow` で管理されていない、または追加の手動設定が必要なツールについて説明します。
+このガイドでは、`stow` で管理されていないツールや、追加の手動設定が必要な項目について説明します。
 
-## 前提条件
+## 推奨されるセットアップ手順
 
-*   `git`
-*   `stow`
-*   `Homebrew` (macOS/Linux) または `scoop` (Windows)
-*   `zsh` (メインシェルとして推奨)
-*   `bash`
-*   `vim` または `neovim`
+1.  **Homebrewのインストール**:
+    ```bash
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    ```
 
-## 手動インストールが必要なツール
+2.  **必須ツールのインストール**:
+    ```bash
+    brew install ghq stow fzf bat eza ripgrep zoxide
+    ```
 
-### 1. zoxide
+3.  **リポジトリのクローン**:
+    ```bash
+    ghq get git@github.com:elpeople/dotfiles.git
+    cd $(ghq list -p -m dotfiles)
+    ```
 
-`zoxide` は、頻繁にアクセスするディレクトリを学習し、素早く移動できるツールです。
+4.  **シンボリックリンクの適用**:
+    ```bash
+    # 個別に適用する場合
+    stow zsh -t ~
+    stow tmux -t ~
+    
+    # 一括で適用する場合
+    stow bash nb vim zsh starship tmux wezterm ranger fzf catppuccin -t ~
+    ```
 
-*   **インストール方法:**
-    *   **Homebrew (macOS/Linux):**
-        ```bash
-        brew install zoxide
-        ```
-    *   **scoop (Windows):**
-        ```bash
-        scoop install zoxide
-        ```
-    *   その他のインストール方法は、[zoxideの公式GitHubリポジトリ](https://github.com/ajeetdsouza/zoxide#installation) を参照してください。
+## 各ツールの詳細設定
 
-*   **dotfilesでの設定ファイル:**
-    *   `zsh`: `~/dotfiles/zsh/.zshrc.mac`, `~/dotfiles/zsh/.zshrc.lin`, `~/dotfiles/zsh/.zshrc.wsl` に `eval "$(zoxide init zsh)"` が記述されています。
-    *   `bash`: `~/dotfiles/bash/.bashrc.mac`, `~/dotfiles/bash/.bashrc.lin`, `~/dotfiles/bash/.bashrc.wsl` に `eval "$(zoxide init bash)"` が記述されています。
+### 1. Zsh (zinit)
+Zshのプラグイン管理には `zinit` を使用しています。
+- **設定ファイル**: `zsh/.zshrc.mac` (macOSの場合)
+- **反映方法**: `source ~/.zshrc`
+- 初回起動時に `zinit` が自動インストールされます。
 
 ### 2. Powerlevel10k (p10k)
+- プロンプトのセットアップ: `p10k configure`
+- **フォント**: [MesloLGS NF](https://github.com/romkatv/powerlevel10k#manual-font-installation) のインストールを推奨します。
 
-Powerlevel10kは、Zsh用の高速でカスタマイズ可能なテーマです。
+### 3. Tmux (TPM)
+- プラグインマネージャー `TPM` が含まれています。
+- **インストール**: tmuxを起動し、`prefix` (Ctrl+g) + `I` を押してプラグインをインストールしてください。
 
-*   **インストール方法:**
-    *   `zinit` を使用してインストールされます。`~/.zshrc` に以下の行が含まれていることを確認してください。
-        ```zsh
-        zinit light romkatv/powerlevel10k
-        ```
-    *   インストール後、`p10k configure` を実行してプロンプトをカスタマイズします。
+### 4. Ranger (Colorschemes)
+- `catppuccin_mocha` テーマが適用されています。
+- 設定ファイル: `ranger/.config/ranger/rc.conf`
 
-*   **推奨フォント:**
-    *   Powerlevel10kの表示を最適化するためには、[MesloLGS NF](https://github.com/ryanoasis/nerd-fonts/releases/latest) のインストールが強く推奨されます。ダウンロード後、システムにインストールし、ターミナルエミュレータ（iTerm2など）のフォント設定で `MesloLGS NF` を選択してください。
+### 5. WezTerm
+- **配色**: Catppuccin Mochaをベースに、タブの色をRangerのディレクトリ色 (#af875f) に合わせています。
+- 設定ファイル: `wezterm/.config/wezterm/wezterm.lua`
 
-*   **dotfilesでの設定ファイル:**
-    *   `~/.p10k.zsh`: `p10k configure` によって生成される設定ファイルです。
-    *   `~/.config/zsh/p10k-catppuccin.zsh`: Catppuccinの色をPowerlevel10kに適用するための設定ファイルです。`~/.zshrc` で `~/.p10k.zsh` の後に読み込まれるように設定されています。
+### 6. fzf (Catppuccin)
+- 視認性を高めたカスタムCatppuccinテーマを適用しています。
+- 設定ファイル: `catppuccin/.config/fzf/catppuccin-mocha.sh`
 
-### 3. dein.vim (Vim/Neovim プラグインマネージャー)
+## 便利なエイリアス
+セットアップ完了後、以下のエイリアスが使用可能になります：
+- `gcd`: dotfilesディレクトリへ移動
+- `g`: ghqリポジトリをインタラクティブに選択して移動
 
-`dein.vim` は、Vim/Neovim用の高速なプラグインマネージャーです。
-
-*   **インストール方法:**
-    *   `~/.vimrc` または `init.vim` に記述されている `dein.vim` のインストールスクリプトを実行します。通常、Vim/Neovimを初めて起動した際に自動的にインストールされます。
-    *   手動でインストールする場合は、[dein.vimの公式GitHubリポジトリ](https://github.com/Shougo/dein.vim#installation) を参照してください。
-
-*   **dotfilesでの設定ファイル:**
-    *   `~/dotfiles/vim/.vimrc`
-    *   `~/dotfiles/vim/dein.toml`: プラグインの定義と設定が含まれています。Catppuccinテーマもここで設定されています。
-
-### 4. rmpc (MPDクライアント)
-
-`rmpc` は、MPD (Music Player Daemon) のターミナルクライアントです。
-
-*   **インストール方法:**
-    *   `rmpc` はRustで書かれているため、`cargo` を使ってインストールできます。
-        ```bash
-        cargo install rmpc
-        ```
-    *   その他のインストール方法は、[rmpcの公式GitHubリポジトリ](https://github.com/garkimasera/rmpc#installation) を参照してください。
-
-*   **dotfilesでの設定ファイル:**
-    *   `~/.config/rmpc/config.ron`: `rmpc` の設定ファイルです。Catppuccinテーマのパレットが設定されています。
-
-### 5. bat (catの代替)
-
-`bat` は、シンタックスハイライトとGit統合を備えた `cat` コマンドの代替です。
-
-*   **インストール方法:**
-    *   **Homebrew (macOS/Linux):**
-        ```bash
-        brew install bat
-        ```
-    *   **scoop (Windows):**
-        ```bash
-        scoop install bat
-        ```
-    *   その他のインストール方法は、[batの公式GitHubリポジトリ](https://github.com/sharkdp/bat#installation) を参照してください。
-
-*   **dotfilesでの設定ファイル:**
-    *   `~/.zshrc` および `~/.bashrc` で `alias cat='bat'` が設定されています。
-
-### 6. fzf (ファジーファインダー)
-
-`fzf` は、コマンドラインで使える汎用的なファジーファインダーです。
-
-*   **インストール方法:**
-    *   **Homebrew (macOS/Linux):**
-        ```bash
-        brew install fzf
-        ```
-    *   **scoop (Windows):**
-        ```bash
-        scoop install fzf
-        ```
-    *   インストール後、`$(fzf --bash)` または `$(fzf --zsh)` を実行してシェルに統合します。
-
-*   **dotfilesでの設定ファイル:**
-    *   `~/.zshrc` および `~/.bashrc` で `fzf` の設定とCatppuccinテーマの読み込み (`~/.config/fzf/catppuccin-mocha.sh`) が記述されています。
-
-### 7. eza (lsの代替)
-
-`eza` は、`ls` コマンドの代替で、より多くの機能と美しい表示を提供します。
-
-*   **インストール方法:**
-    *   **Homebrew (macOS/Linux):**
-        ```bash
-        brew install eza
-        ```
-    *   その他のインストール方法は、[ezaの公式GitHubリポジトリ](https://github.com/eza-community/eza#installation) を参照してください。
-
-*   **dotfilesでの設定ファイル:**
-    *   `~/.zshrc` および `~/.bashrc` で `~/.config/eza/catppuccin-mocha.sh` が読み込まれ、Catppuccinの色が適用されます。
-
-### 8. ripgrep (grepの代替)
-
-`ripgrep` は、高速な再帰的grepです。
-
-*   **インストール方法:**
-    *   **Homebrew (macOS/Linux):**
-        ```bash
-        brew install ripgrep
-        ```
-    *   **scoop (Windows):**
-        ```bash
-        scoop install ripgrep
-        ```
-    *   その他のインストール方法は、[ripgrepの公式GitHubリポジトリ](https://github.com/BurntSushi/ripgrep#installation) を参照してください。
-
-*   **dotfilesでの設定ファイル:**
-    *   `~/.zshrc` および `~/.bashrc` で `~/.config/ripgrep/catppuccin-mocha.sh` が読み込まれ、Catppuccinの色が適用されます。
-
-## 補足事項
-
-*   **Catppuccinテーマ:** 各ツールのCatppuccinテーマは、`~/.config/` 以下に配置されています。
-*   **`stow`:** このリポジトリは `stow` を使用して管理されています。`stow` の基本的な使い方は、[GNU Stowの公式ドキュメント](https://www.gnu.org/software/stow/manual/stow.html) を参照してください。
-*   **環境変数:** `~/.zshrc` や `~/.bashrc` で `PATH` などの環境変数が設定されています。必要に応じて調整してください。
-
-このガイドが、あなたの環境をセットアップするのに役立つことを願っています。
+## パッケージ一覧
+現在インストールされている Homebrew パッケージについては [Casks.md](Casks.md) を参照してください。
