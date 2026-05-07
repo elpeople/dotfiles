@@ -145,6 +145,8 @@ alias wttr2='curl v2.wttr.in/fukuoka'
 #alias acli='acli rovodev run'
 alias mpc='mpc'
 alias rmpc='rmpc'
+alias gcd='cd $(ghq list -p -m dotfiles)'
+alias g='cd $(ghq list -p | fzf)'
 
 zinit ice wait'!0'
 zinit light zsh-users/zsh-autosuggestions
