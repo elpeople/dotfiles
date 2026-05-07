@@ -5,7 +5,8 @@
 
 set -e
 
-DOTFILES_DIR="$HOME/dotfiles"
+# Detect script directory (the dotfiles root)
+DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DOTFILES_DIR"
 
 # Color codes for output
@@ -15,20 +16,8 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Available packages
-PACKAGES=(
-    "bash"
-    "zsh"
-    "vim"
-    "tmux"
-    "i3"
-    "ranger"
-    "wezterm"
-    "lazygit"
-    "local_bin"
-    "w3m"
-    "nvim"
-)
+# Available packages (automatically detect directories, excluding hidden and specific folders)
+PACKAGES=($(ls -d */ | cut -f1 -d'/' | grep -vE '^(old|node_modules|ghost|syswatch|ghtest|backup)$'))
 
 # Function to print colored output
 print_status() {
@@ -63,21 +52,26 @@ backup_existing() {
     print_status "Checking for existing files for package: $package"
     
     # Use stow's simulation mode to check for conflicts
-    if stow -n "$package" 2>&1 | grep -q "existing target"; then
+    # Note: we use -t ~ to target home directory explicitly
+    if stow -n -t ~ "$package" 2>&1 | grep -q "existing target"; then
         print_warning "Found existing files that would conflict with $package"
-        read -p "Do you want to backup existing files? (y/N): " -n 1 -r
+        read -p "Do you want to backup existing files to ~/.dotfiles_backup? (y/N): " -n 1 -r
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
             mkdir -p "$backup_dir"
             
             # Extract conflicting files and backup
-            stow -n "$package" 2>&1 | grep "existing target" | while read -r line; do
+            stow -n -t ~ "$package" 2>&1 | grep "existing target" | while read -r line; do
                 if [[ $line =~ existing\ target\ is\ (.+)\ but\ link\ target\ is ]]; then
                     local file="${BASH_REMATCH[1]}"
-                    if [[ -f "$file" || -d "$file" ]]; then
+                    # Ensure path is absolute for removal/copying
+                    [[ "$file" != /* ]] && file="$HOME/$file"
+                    if [[ -e "$file" ]]; then
                         print_status "Backing up: $file"
-                        cp -r "$file" "$backup_dir/"
+                        # Create subdirectory structure in backup if needed
+                        mkdir -p "$backup_dir/$(dirname "${file#$HOME/}")"
+                        cp -r "$file" "$backup_dir/${file#$HOME/}"
                         rm -rf "$file"
                     fi
                 fi
@@ -105,7 +99,7 @@ install_package() {
     backup_existing "$package" || return 1
     
     # Install the package
-    if stow "$package"; then
+    if stow -v -t ~ "$package"; then
         print_success "Successfully installed: $package"
     else
         print_error "Failed to install: $package"
@@ -119,7 +113,7 @@ uninstall_package() {
     
     print_status "Uninstalling package: $package"
     
-    if stow -D "$package"; then
+    if stow -D -t ~ "$package"; then
         print_success "Successfully uninstalled: $package"
     else
         print_error "Failed to uninstall: $package"
@@ -138,19 +132,17 @@ reinstall_package() {
 
 # Function to list available packages
 list_packages() {
-    print_status "Available packages:"
+    print_status "Available packages in $DOTFILES_DIR:"
     for package in "${PACKAGES[@]}"; do
-        if [[ -d "$package" ]]; then
-            echo "  ✓ $package"
-        else
-            echo "  ✗ $package (not found)"
-        fi
+        echo "  - $package"
     done
 }
 
 # Function to show help
 show_help() {
     echo "Dotfiles management script using GNU Stow"
+    echo ""
+    echo "Current Location: $DOTFILES_DIR"
     echo ""
     echo "Usage: $0 [COMMAND] [PACKAGE]"
     echo ""
@@ -165,21 +157,18 @@ show_help() {
     echo "Examples:"
     echo "  $0 install zsh           Install zsh configuration"
     echo "  $0 install all           Install all packages"
-    echo "  $0 uninstall tmux        Uninstall tmux configuration"
-    echo "  $0 reinstall all         Reinstall all packages"
 }
 
 # Function to show status
 show_status() {
-    print_status "Current stow status:"
+    print_status "Current stow status (target: $HOME):"
     for package in "${PACKAGES[@]}"; do
-        if [[ -d "$package" ]]; then
-            echo -n "  $package: "
-            if stow -n "$package" 2>&1 | grep -q "WARNING"; then
-                echo -e "${GREEN}installed${NC}"
-            else
-                echo -e "${YELLOW}not installed${NC}"
-            fi
+        echo -n "  $package: "
+        # Check if it's already stowed (if stow -n shows warnings about existing targets that ARE links, it might be stowed)
+        if stow -n -t ~ "$package" 2>&1 | grep -q "existing target"; then
+             echo -e "${GREEN}active/conflict${NC}"
+        else
+             echo -e "${YELLOW}not stowed${NC}"
         fi
     done
 }
@@ -192,9 +181,7 @@ main() {
         "install")
             if [[ "${2:-}" == "all" ]]; then
                 for package in "${PACKAGES[@]}"; do
-                    if [[ -d "$package" ]]; then
-                        install_package "$package"
-                    fi
+                    install_package "$package"
                 done
             elif [[ -n "${2:-}" ]]; then
                 install_package "$2"
@@ -206,9 +193,7 @@ main() {
         "uninstall")
             if [[ "${2:-}" == "all" ]]; then
                 for package in "${PACKAGES[@]}"; do
-                    if [[ -d "$package" ]]; then
-                        uninstall_package "$package"
-                    fi
+                    uninstall_package "$package"
                 done
             elif [[ -n "${2:-}" ]]; then
                 uninstall_package "$2"
@@ -220,9 +205,7 @@ main() {
         "reinstall")
             if [[ "${2:-}" == "all" ]]; then
                 for package in "${PACKAGES[@]}"; do
-                    if [[ -d "$package" ]]; then
-                        reinstall_package "$package"
-                    fi
+                    reinstall_package "$package"
                 done
             elif [[ -n "${2:-}" ]]; then
                 reinstall_package "$2"
