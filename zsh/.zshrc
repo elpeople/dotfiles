@@ -49,8 +49,8 @@ export LC_ALL=ja_JP.UTF-8
 
 
 # Load common aliases
-if [ -f "$HOME/dotfiles/shell/aliases" ]; then
-    source "$HOME/dotfiles/shell/aliases"
+if [ -f "$HOME/src/github.com/elpeople/Dotfiles/shell/aliases" ]; then
+    source "$HOME/src/github.com/elpeople/Dotfiles/shell/aliases"
 fi
 
 # 環境ごとの分岐
