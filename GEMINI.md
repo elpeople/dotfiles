@@ -8,10 +8,14 @@ This repository manages user configuration files (dotfiles) for various tools.
 - **Standards**: Follows **XDG Base Directory Specification** wherever possible (storing configs in `.config/`).
 
 ## Workflows
-- **Applying Changes**: Navigate to the repository root and run `stow <package_name>`.
+- **Applying Changes**: Navigate to the repository root and run `stow <package_name>` or use the included `install.sh`.
   ```bash
   cd $(ghq list -p -m dotfiles)
-  stow bash
-  stow tmux
+  ./install.sh install all
   ```
+- **Script Specification (`install.sh`)**:
+    - **Auto-Discovery**: Automatically detects top-level directories as packages (excludes `old`, `node_modules`, etc.).
+    - **Backup**: Conflicting files in `~` are automatically moved to `~/.dotfiles_backup/`.
+    - **Safety**: Always uses `-t ~` to ensure correct symlink targeting.
+
 - **Adding New Configs**: Create a directory structure that mirrors the desired path from the home directory, then `stow` it.
