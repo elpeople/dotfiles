@@ -5,7 +5,7 @@
 
 set -e
 
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$DOTFILES"
 cd "$DOTFILES_DIR"
 
 # Color codes for output

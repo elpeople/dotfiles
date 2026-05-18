@@ -10,11 +10,14 @@ esac
 export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 
-echo "DEBUG: ~/.bashrc is being executed."
+# DOTFILES path
+export DOTFILES=$HOME/src/github.com/elpeople/dotfiles
+
+# echo "DEBUG: ~/.bashrc is being executed."
 
 # Load common aliases
-if [ -f "$HOME/dotfiles/shell/aliases" ]; then
-    source "$HOME/dotfiles/shell/aliases"
+if [ -f "$DOTFILES/shell/aliases" ]; then
+    source "$DOTFILES/shell/aliases"
 fi
 
 # Cargo and rmpc (from local)
@@ -24,40 +27,40 @@ alias rmpc="$HOME/.cargo/bin/rmpc"
 
 # Load OS-specific bashrc
 if [ -n "$WSL_DISTRO_NAME" ] || grep -q microsoft /proc/version 2>/dev/null; then
-    echo "DEBUG: Detected WSL environment."
+    # echo "DEBUG: Detected WSL environment."
     # WSL (Windows Subsystem for Linux)
-    if [ -f "$HOME/dotfiles/bash/.bashrc.wsl" ]; then
-        echo "DEBUG: Sourcing $HOME/dotfiles/bash/.bashrc.wsl"
-        . "$HOME/dotfiles/bash/.bashrc.wsl"
+    if [ -f "$DOTFILES/bash/.bashrc.wsl" ]; then
+        # echo "DEBUG: Sourcing $DOTFILES/bash/.bashrc.wsl"
+        . "$DOTFILES/bash/.bashrc.wsl"
     else
-        echo "DEBUG: $HOME/dotfiles/bash/.bashrc.wsl not found."
+        echo "DEBUG: $DOTFILES/bash/.bashrc.wsl not found."
     fi
 elif [[ "$(uname -s)" == "Linux" ]]; then
-    echo "DEBUG: Detected Generic Linux environment."
+    # echo "DEBUG: Detected Generic Linux environment."
     # Generic Linux (not WSL)
-    if [ -f "$HOME/dotfiles/bash/.bashrc.lin" ]; then
-        echo "DEBUG: Sourcing $HOME/dotfiles/bash/.bashrc.lin"
-        . "$HOME/dotfiles/bash/.bashrc.lin"
+    if [ -f "$DOTFILES/bash/.bashrc.lin" ]; then
+        # echo "DEBUG: Sourcing $DOTFILES/bash/.bashrc.lin"
+        . "$DOTFILES/bash/.bashrc.lin"
     else
-        echo "DEBUG: $HOME/dotfiles/bash/.bashrc.lin not found."
+        echo "DEBUG: $DOTFILES/bash/.bashrc.lin not found."
     fi
 elif [[ "$(uname -s)" == "Darwin" ]]; then
     echo "DEBUG: Detected macOS environment."
     # macOS
-    if [ -f "$HOME/dotfiles/bash/.bashrc.mac" ]; then
-        echo "DEBUG: Sourcing $HOME/dotfiles/bash/.bashrc.mac"
-        . "$HOME/dotfiles/bash/.bashrc.mac"
+    if [ -f "$DOTFILES/bash/.bashrc.mac" ]; then
+        echo "DEBUG: Sourcing $DOTFILES/bash/.bashrc.mac"
+        . "$DOTFILES/bash/.bashrc.mac"
     else
-        echo "DEBUG: $HOME/dotfiles/bash/.bashrc.mac not found."
+        echo "DEBUG: $DOTFILES/bash/.bashrc.mac not found."
     fi
 elif [[ "$(uname -s)" == "CYGWIN_NT"* || "$(uname -s)" == "MINGW"* ]]; then
     echo "DEBUG: Detected Windows (Cygwin/Git Bash) environment."
     # Windows (Cygwin or Git Bash)
-    if [ -f "$HOME/dotfiles/bash/.bashrc.win" ]; then
-        echo "DEBUG: Sourcing $HOME/dotfiles/bash/.bashrc.win"
-        . "$HOME/dotfiles/bash/.bashrc.win"
+    if [ -f "$DOTFILES/bash/.bashrc.win" ]; then
+        echo "DEBUG: Sourcing $DOTFILES/bash/.bashrc.win"
+        . "$DOTFILES/bash/.bashrc.win"
     else
-        echo "DEBUG: $HOME/dotfiles/bash/.bashrc.win not found."
+        echo "DEBUG: $DOTFILES/bash/.bashrc.win not found."
     fi
 else
     echo "DEBUG: Unknown OS detected: $(uname -s)"
@@ -175,3 +178,8 @@ alias castero='~/.local/bin/castero-wrapper.sh'
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+# WSL Copy-Paste Aliases (wsl-copy-paste)
+# Perfect clipboard integration between WSL and Windows
+alias copy='powershell.exe -noprofile -command "$stdin = [Console]::OpenStandardInput(); $bytes = [System.IO.MemoryStream]::new(); $stdin.CopyTo($bytes); $text = [System.Text.Encoding]::UTF8.GetString($bytes.ToArray()); $text = $text -replace \"`n\", \"`r`n\"; Set-Clipboard -Value $text"'
+alias paste='powershell.exe -noprofile -command "$text = Get-Clipboard -Raw; $bytes = [System.Text.Encoding]::UTF8.GetBytes($text); [Console]::OpenStandardOutput().Write($bytes, 0, $bytes.Length)" | tr -d "\r"'
+export DOTFILES="$HOME/src/github.com/elpeople/dotfiles"

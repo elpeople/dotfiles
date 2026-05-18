@@ -61,3 +61,4 @@ dotfiles_old2/
 old/
 newsboat/.newsboat/cache.db
 ranger/.config/ranger/scope.sh.gh
+.aider*

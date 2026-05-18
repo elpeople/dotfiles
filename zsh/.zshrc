@@ -23,8 +23,8 @@ export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 
 # Load common aliases
-if [ -f "$HOME/dotfiles/shell/aliases" ]; then
-    source "$HOME/dotfiles/shell/aliases"
+if [ -f "$DOTFILES/shell/aliases" ]; then
+    source "$DOTFILES/shell/aliases"
 fi
 
 # 環境ごとの分岐
@@ -128,3 +128,52 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 . "$HOME/.local/share/../bin/env"
+
+# pnpm
+export PNPM_HOME="/home/elpeople/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# tilex: <number> 個のペインで <command> を並列実行
+# 使い方: tilex 4 -- python script.py
+tilex() {
+  local count session="multirun"
+
+  # ---------- 引数パース ----------
+  while (($#)); do
+    case $1 in
+      --) shift; break ;;
+      [0-9]*) count=$1; shift ;;
+      *) echo "Usage: tilex <number> -- <command>"; return 1 ;;
+    esac
+  done
+  [[ -z $count || $# -eq 0 ]] && { echo "Usage: tilex <number> -- <command>"; return 1; }
+
+  local cmd="$*"
+
+  # ---------- セッション準備 ----------
+  if [[ -z $TMUX ]]; then
+    tmux new-session -d -s "$session" "$cmd"
+    target="$session"
+    created=1               # 1ペイン目は new-session で生成済み
+  else
+    target="."              # 現ウィンドウ
+    created=0
+  fi
+
+  # ---------- ペイン生成 ----------
+  for ((i = created; i < count; i++)); do
+    tmux split-window -t "$target" "$cmd" && ((created++))
+  done
+
+  # ---------- レイアウト整形と接続 ----------
+  tmux select-layout -t "$target" tiled
+  [[ -z $TMUX ]] && tmux attach-session -t "$session"
+
+  echo "✅ tilex: created $created/$count pane(s)."
+}
+export DOTFILES="$HOME/src/github.com/elpeople/dotfiles"
+[ -f ~/.config/fzf/catppuccin-mocha.sh ] && source ~/.config/fzf/catppuccin-mocha.sh

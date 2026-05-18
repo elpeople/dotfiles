@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # dotfilesディレクトリのパス
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$DOTFILES"
 
 # シンボリックリンクを安全に作成する関数
 create_symlink() {
